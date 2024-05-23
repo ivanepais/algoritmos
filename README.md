@@ -2031,7 +2031,210 @@
 
 || Complejidad Espacial
 
+	Se refiere a la cantidad de memoria que necesita para su ejecución en función del tamaño de la entrada. 
+
+	Es un aspecto crucial en el análisis de algoritmos, ya que afecta directamente la eficiencia y viabilidad de su implementación, especialmente en sistemas con recursos limitados.
+
+
+	Definición:
+
+    	La complejidad espacial mide el espacio total requerido por un algoritmo, que incluye tanto el espacio para los datos de entrada como el espacio adicional que el algoritmo necesita para su procesamiento.
 	
+
+    Componentes de la Complejidad Espacial:
+
+    	Espacio de Entrada:
+
+    		Memoria requerida para almacenar los datos de entrada.
+
+    	Espacio Auxiliar: 
+
+    		Memoria adicional utilizada por el algoritmo durante su ejecución, como variables temporales, estructuras de datos auxiliares, etc.
+
+    	Notación Asintótica:
+
+    		Al igual que la complejidad temporal, la complejidad espacial se expresa usando notaciones como O, Ω y Θ para describir el crecimiento del espacio en función del tamaño de la entrada (n).
+
+
+    Análisis de complejidad espacial en Algoritmos: 
+
+    	Búsqueda Lineal
+
+			La búsqueda lineal revisa cada elemento de una lista para encontrar un valor objetivo.
+
+			```python
+
+			def linear_search(arr, target):
+			    for i in range(len(arr)):
+			        if arr[i] == target:
+			            return i
+			    return -1
+
+			```
+
+			Complejidad Espacial: O(1).
+
+        		El algoritmo utiliza una cantidad constante de espacio adicional, independientemente del tamaño de la lista.
+
+
+        Búsqueda Binaria
+
+			La búsqueda binaria funciona en listas ordenadas y divide el rango de búsqueda a la mitad en cada paso.
+
+			```python
+
+			def binary_search(arr, target):
+			    low = 0
+			    high = len(arr) - 1
+
+			    while low <= high:
+			        mid = (low + high) // 2
+
+			        if arr[mid] == target:
+			            return mid
+			        elif arr[mid] < target:
+			            low = mid + 1
+			        else:
+			            high = mid - 1
+
+			    return -1
+
+			```
+
+
+		Merge Sort (Ordenación por Mezcla):
+
+			Merge Sort es un algoritmo de ordenación que utiliza el enfoque de dividir y conquistar.
+
+			```python
+
+			def merge_sort(arr):
+			    if len(arr) > 1:
+			        mid = len(arr) // 2
+			        L = arr[:mid]
+			        R = arr[mid:]
+
+			        merge_sort(L)
+			        merge_sort(R)
+
+			        i = j = k = 0
+			        while i < len(L) and j < len(R):
+			            if L[i] < R[j]:
+			                arr[k] = L[i]
+			                i += 1
+			            else:
+			                arr[k] = R[j]
+			                j += 1
+			            k += 1
+
+			        while i < len(L):
+			            arr[k] = L[i]
+			            i += 1
+			            k += 1
+
+			        while j < len(R):
+			            arr[k] = R[j]
+			            j += 1
+			            k += 1
+
+			    return arr
+
+			```
+
+			Complejidad Espacial: O(n):
+
+    			Utiliza espacio adicional para almacenar las sublistas LL y RR, resultando en un espacio auxiliar lineal.
+
+
+    	Quick Sort (Ordenación Rápida):
+
+			Quick Sort es otro algoritmo de ordenación eficiente que también usa el enfoque de dividir y conquistar.
+
+			```python
+
+			def quick_sort(arr):
+			    if len(arr) <= 1:
+			        return arr
+			    else:
+			        pivot = arr[len(arr) // 2]
+			        left = [x for x in arr if x < pivot]
+			        middle = [x for x in arr if x == pivot]
+			        right = [x for x in arr if x > pivot]
+			        return quick_sort(left) + middle + quick_sort(right)
+
+			```
+
+			Complejidad Espacial:
+
+    			En el peor de los casos:
+
+    				O(n), debido a las llamadas recursivas que pueden usar hasta n niveles de pila.
+    		
+
+    			En el mejor y promedio de los casos: 
+
+    				O(log⁡ n) si se implementa en lugar (in-place) y de manera óptima.
+
+
+    Consideraciones:
+
+    	Eficiencia de Memoria:
+
+		    En sistemas con memoria limitada, es crucial seleccionar algoritmos que utilicen la menor cantidad de espacio adicional posible.
+
+		Impacto en el Rendimiento:
+
+		    Un uso excesivo de memoria puede provocar intercambios frecuentes con la memoria secundaria (paginación), lo que afecta negativamente el rendimiento del algoritmo.
+
+		Escalabilidad:
+
+		    La complejidad espacial afecta la capacidad de un algoritmo para manejar grandes conjuntos de datos.
+
+		    Algoritmos con baja complejidad espacial son más escalables.
+
+
+	Implementación: 
+
+		Para ilustrar cómo la complejidad espacial afecta la selección del algoritmo, consideremos dos métodos para revertir una lista.
+
+
+		Método 1: Uso de lista auxiliar
+
+			```python
+
+			def reverse_list_aux(arr):
+			    n = len(arr)
+			    reversed_arr = [0] * n
+			    for i in range(n):
+			        reversed_arr[i] = arr[n - i - 1]
+			    return reversed_arr
+
+
+			``` 
+
+			Complejidad Espacial: O(n):
+
+    			Utiliza espacio adicional proporcional al tamaño de la lista original.
+
+
+    	Método 2: In-place.
+
+    		```python
+
+    		def reverse_list_in_place(arr):
+			    left = 0
+			    right = len(arr) - 1
+			    while left < right:
+			        arr[left], arr[right] = arr[right], arr[left]
+			        left += 1
+			        right -= 1
+			    return arr
+
+    		```
+
+    		Complejidad Espacial: O(1)
+
+    			Requiere una cantidad constante de espacio adicional, ya que la reversión se realiza dentro de la misma lista.
 
 
 
@@ -2051,21 +2254,529 @@
 
 
 
+|| Bubble Sort
+	
+	Algoritmo de ordenación simple que itera repetidamente a través de la lista, compara elementos adyacentes y los intercambia si están en el orden incorrecto.
 
-|| Algoritmos Básicos
+	Este proceso se repite hasta que la lista está ordenada. 
 
-	1. Algoritmos de Ordenación:
-
-	    Bubble Sort, Selection Sort, Insertion Sort.
-
-	    Merge Sort, Quick Sort.
+	Aunque es fácil de entender e implementar, no es eficiente para listas grandes debido a su complejidad temporal cuadrática
 
 
-	2. Algoritmos de Búsqueda:
+	Funcionamiento:
 
-	    Búsqueda lineal.
+	    Recorre la lista múltiples veces.
 
-	    Búsqueda binaria.
+	    En cada pasada, empuja el elemento más grande hacia su posición final.
+
+	    El nombre "Bubble Sort" proviene de la forma en que los elementos más grandes "burbujearán" hacia la parte superior (final de la lista) con cada pasada.
+
+
+	Paso a paso: 
+
+		1. Inicialización:
+
+		    Comenzamos desde el primer elemento de la lista.
+
+		2. Comparación e Intercambio:
+
+		    Comparamos cada par de elementos adyacentes.
+
+		    Si el primer elemento es mayor que el segundo, los intercambiamos.
+
+		3. Iteración:
+
+		    Repetimos el proceso para todos los elementos de la lista.
+
+		    Cada pasada completa coloca el siguiente elemento más grande en su lugar correcto.
+
+		    Repetimos hasta que no se necesiten más intercambios.
+
+
+	Implementación:
+
+		```python
+
+		def bubble_sort(arr):
+		    n = len(arr)
+		    for i in range(n):
+		        swapped = False
+		        for j in range(0, n-i-1):
+		            if arr[j] > arr[j+1]:
+		                arr[j], arr[j+1] = arr[j+1], arr[j]  # Intercambio
+		                swapped = True
+		        if not swapped:
+		            break  # Si no hubo intercambios, la lista ya está ordenada
+		    return arr
+
+		```	
+
+		Complejidad Temporal
+
+	    Peor Caso: O(n^2):
+
+	        Ocurre cuando la lista está ordenada en orden inverso.
+
+	    Mejor Caso: O(n)
+
+	        Ocurre cuando la lista ya está ordenada (con la optimización de detección de intercambio).
+
+	    Caso Promedio: O(n^2)
+
+	        Promedio de todas las posibles configuraciones de la lista
+
+
+	Ventajas: 
+
+		No requiere espacio adicional (ordenación en el lugar).
+
+
+	Desventajas: 
+
+		Ineficiente para listas grandes debido a su complejidad temporal cuadrática.
+			
+		Generalmente, hay algoritmos más eficientes disponibles para la mayoría de las aplicaciones prácticas.
+
+
+
+|| Selection Sort	
+
+	Es un algoritmo de ordenación simple y eficiente para listas pequeñas. 
+
+	La idea principal es dividir la lista en dos partes: la sublista ordenada y la sublista desordenada. 
+
+	Repetidamente encuentra el elemento mínimo (o máximo, dependiendo del orden) de la sublista desordenada y lo mueve al final de la sublista ordenada. 
+
+	Este proceso se repite hasta que toda la lista está ordenada
+
+	Es un buen algoritmo para aprender los fundamentos de la ordenación, especialmente debido a su simplicidad. 
+
+	Sin embargo, debido a su ineficiencia para listas grandes, no es adecuado para aplicaciones prácticas donde se necesitan ordenar grandes volúmenes de datos. 
+
+	Comprender Selection Sort proporciona una base para aprender algoritmos de ordenación más avanzados y eficientes, como Quick Sort y Merge Sort.
+
+
+	Funcionamiento:
+
+    	Encuentra el elemento mínimo en la parte desordenada de la lista.
+
+    	Intercambia el elemento mínimo encontrado con el primer elemento de la parte desordenada.
+
+    	Mueve el límite entre las partes ordenada y desordenada un elemento hacia la derecha.
+
+    	Repite hasta que toda la lista está ordenada.
+
+
+    Paso a Paso:
+
+    	Inicialización:
+
+    		Empezamos desde el primer elemento de la lista.
+
+    	Selección del Elemento Mínimo:
+
+    		Encuentra el elemento mínimo en la sublista desordenada.
+
+    	Intercambio:
+
+    		Intercambia el elemento mínimo encontrado con el primer elemento de la sublista desordenada.
+
+		Repetición:
+
+		    Repite el proceso para el resto de la lista, moviendo el límite de la sublista ordenada hacia la derecha en cada iteración.
+
+
+	Implementación:
+
+		def selection_sort(arr):
+		    n = len(arr)
+		    for i in range(n):
+		        # Encuentra el elemento mínimo en la sublista arr[i:n]
+		        min_idx = i
+		        for j in range(i+1, n):
+		            if arr[j] < arr[min_idx]:
+		                min_idx = j
+		        # Intercambia el elemento mínimo con el primer elemento de la sublista desordenada
+		        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+		    return arr
+
+		    ```
+
+
+		Complejidad Temporal
+
+		    Peor Caso: O(n^2)
+
+		        Ocurre cuando la lista está ordenada en orden inverso.
+
+		    Mejor Caso: O(n^2)
+
+		        Incluso si la lista ya está ordenada, aún necesitamos comparar cada elemento.
+
+		    Caso Promedio: O(n^2)
+
+		        Promedio de todas las posibles configuraciones de la lista		    
+
+
+		Complejidad Espacial
+
+		    Espacio Adicional: O(1)
+
+		        Solo necesita una cantidad constante de espacio adicional para las variables temporales, ya que la ordenación se realiza en el lugar (in-place).
+
+
+	Ventajas: 
+
+		Fácil de entender e implementar.
+
+		Requiere una cantidad mínima de espacio adicional (in-place).
+
+
+	Desventajas: 
+
+		Ineficiente para listas grandes debido a su complejidad temporal cuadrática.
+
+		No es estable (el orden relativo de elementos iguales puede cambiar).
+
+
+
+|| Insertion Sort
+	
+	Algoritmo de ordenación simple e intuitivo que funciona de manera similar a cómo los humanos organizan cartas en una mano de naipes. 
+
+	Es eficiente para listas pequeñas y generalmente más eficiente que Bubble Sort y Selection Sort en la práctica.
+
+
+	Definición: 
+
+		Insertion Sort es un algoritmo de ordenación que construye la lista ordenada uno a uno, insertando cada nuevo elemento en su posición correcta.
+
+
+	Funcionamiento:
+
+	    Divide la lista en una parte ordenada y una parte desordenada.
+
+	    Toma elementos de la parte desordenada uno a uno y los inserta en la posición correcta dentro de la parte ordenada.
+
+	    Repite hasta que toda la lista está ordenada.
+
+
+	Paso a Paso:
+
+		Inicialización:
+
+		    Comienza con el segundo elemento (el primer elemento por sí solo está trivialmente ordenado).
+
+		Inserción:
+
+		    Toma el siguiente elemento de la parte desordenada.
+
+		    Compara este elemento con los elementos de la parte ordenada y encuentra su posición correcta.
+
+		    Inserta el elemento en su posición correcta desplazando los elementos mayores hacia la derecha.
+
+		Repetición:
+
+		    Repite el proceso hasta que toda la lista esté ordenada.			    
+
+
+	Implementación:
+
+		```python
+
+		def insertion_sort(arr):
+		    n = len(arr)
+		    for i in range(1, n):
+		        key = arr[i]
+		        j = i - 1
+		        # Mueve los elementos de arr[0..i-1], que son mayores que key, a una posición adelante de su posición actual
+		        while j >= 0 and key < arr[j]:
+		            arr[j + 1] = arr[j]
+		            j -= 1
+		        arr[j + 1] = key
+		    return arr
+
+		```
+
+		Complejidad Temporal
+
+		    Peor Caso: O(n^2)
+		        Ocurre cuando la lista está ordenada en orden inverso.
+
+		    Mejor Caso: O(n)
+		        Ocurre cuando la lista ya está ordenada.
+
+		    Caso Promedio: O(n^2)
+		        
+		        Promedio de todas las posibles configuraciones de la lista.
+
+
+		Complejidad Espacial
+
+		    Espacio Adicional: O(1)
+
+		        Solo necesita una cantidad constante de espacio adicional para las variables temporales, ya que la ordenación se realiza en el lugar (in-place).
+
+
+	Ventajas:
+
+   		Fácil de entender e implementar.
+
+    	Eficiente para listas pequeñas y casi ordenadas.
+
+    	Ordena en el lugar (in-place).
+
+    	Es estable (el orden relativo de elementos iguales se mantiene).
+
+
+    Desventajas: 
+
+		Ineficiente para listas grandes debido a su complejidad temporal cuadrática.    	
+
+
+
+|| Merge Sort
+
+	Algoritmo de ordenación eficiente y estable basado en el paradigma de divide y vencerás.
+
+	Es uno de los algoritmos de ordenación más utilizados debido a su eficiencia y su capacidad para manejar listas grandes.
+
+	
+	Definición:
+
+		Divide repetidamente una lista en mitades hasta que cada sublista tiene un solo elemento, luego combina (merge) las sublistas para producir listas ordenadas hasta obtener la lista final ordenada.
+
+
+	Funcionamiento:
+
+		Divide: 
+
+			Divide la lista en dos mitades de manera recursiva hasta que cada sublista tiene un solo elemento.
+
+		Conquista: 
+
+			Ordena las dos mitades recursivamente.
+
+		Combina: 
+
+			Combina (merge) las dos mitades ordenadas en una sola lista ordenada.		
+
+	Paso a Paso:
+
+		1. División Recursiva:
+
+		    Si la lista tiene más de un elemento, se divide en dos mitades.
+
+		    La división continúa recursivamente hasta que las sublistas tienen un solo elemento.
+
+
+		2. Combinación:
+
+		    Comienza combinando las sublistas más pequeñas.
+
+		    Durante la combinación, se comparan los elementos de las dos sublistas y se fusionan en una lista ordenada.
+
+		    Este proceso se repite hasta que todas las sublistas se combinan en una lista ordenada. 	
+
+
+	Implementación: 
+
+		```python
+
+		def merge_sort(arr):
+		    if len(arr) > 1:
+		        mid = len(arr) // 2
+		        left_half = arr[:mid]
+		        right_half = arr[mid:]
+
+		        # Recursión en cada mitad
+		        merge_sort(left_half)
+		        merge_sort(right_half)
+
+		        # Índices iniciales para sublistas left_half y right_half
+		        i = j = k = 0
+
+		        # Merging the sorted halves
+		        while i < len(left_half) and j < len(right_half):
+		            if left_half[i] < right_half[j]:
+		                arr[k] = left_half[i]
+		                i += 1
+		            else:
+		                arr[k] = right_half[j]
+		                j += 1
+		            k += 1
+
+		        # Chequea si quedó algún elemento
+		        while i < len(left_half):
+		            arr[k] = left_half[i]
+		            i += 1
+		            k += 1
+
+		        while j < len(right_half):
+		            arr[k] = right_half[j]
+		            j += 1
+		            k += 1
+
+		    return arr
+
+		```
+
+		Complejidad Temporal
+
+    		Peor Caso: 
+
+    			O(nlog⁡n)
+
+    		Mejor Caso: 
+
+    			O(nlog⁡n)
+    		
+    		Caso Promedio: 
+
+    			O(nlog⁡n).
+
+
+		Complejidad Espacial
+
+		    Espacio Adicional: O(n)
+
+		        Necesita espacio adicional proporcional al tamaño de la lista debido a las sublistas creadas durante la división y combinación
+
+
+	Ventajas:
+
+	    Eficiente con una complejidad temporal O(nlog⁡n) en todos los casos.
+	    
+	    Estable: preserva el orden relativo de los elementos iguales.
+
+	    Funciona bien con listas grandes y datos almacenados en discos debido a su naturaleza de acceso secuencial.
+
+
+	Desventajas:
+
+	    Requiere espacio adicional proporcional al tamaño de la lista, lo que puede ser una limitación en sistemas con memoria limitada.
+
+	    Más complicado de implementar que algoritmos más simples como Bubble Sort o Insertion Sort.
+
+
+
+|| Quick Sort
+
+	Uno de los algoritmos de ordenación más eficientes y ampliamente utilizados. 
+
+	Se basa en el paradigma de divide y vencerás y es conocido por su eficiencia en promedio, aunque en el peor caso puede ser menos eficiente que otros algoritmos como Merge Sort.
+
+	
+	Definición:
+
+		Selecciona un elemento como pivote y particiona la lista en dos sublistas: una con elementos menores al pivote y otra con elementos mayores al pivote. 
+
+		Luego, ordena recursivamente las sublistas.
+
+
+	Funcionamiento:
+
+	    División: 
+
+	    	Selecciona un pivote de la lista.
+
+	    Partición: 
+
+	    	Reorganiza los elementos de manera que todos los elementos menores que el pivote estén a su izquierda y todos los elementos mayores estén a su derecha.
+
+	    Recursión: 
+
+	    	Aplica recursivamente el mismo proceso a las sublistas izquierda y derecha	
+
+
+	Paso a Paso:	
+
+		1. Elección del Pivote:
+
+			Elige un elemento de la lista como pivote. 
+
+			Hay varias estrategias para elegir el pivote, como el primer elemento, el último elemento, un elemento al azar, o el mediano.
+
+		Partición:
+
+		    Reorganiza la lista de manera que los elementos menores que el pivote estén a su izquierda y los mayores a su derecha. 
+
+		    El pivote está en su posición final.
+
+		Recursión:
+
+		    Aplica el proceso de forma recursiva a las sublistas izquierda y derecha hasta que la lista esté completamente orden.
+
+
+	Implementación:
+		
+		Usando el último elemento como pivote.
+
+		```python
+
+		def partition(arr, low, high):
+		    pivot = arr[high]
+		    i = low - 1  # Índice del elemento más pequeño
+		    for j in range(low, high):
+		        if arr[j] <= pivot:
+		            i += 1
+		            arr[i], arr[j] = arr[j], arr[i]  # Intercambio
+		    arr[i + 1], arr[high] = arr[high], arr[i + 1]  # Intercambio el pivote
+		    return i + 1
+
+		def quick_sort(arr, low, high):
+		    if low < high:
+		        pi = partition(arr, low, high)
+		        quick_sort(arr, low, pi - 1)
+		        quick_sort(arr, pi + 1, high)
+		    return arr
+
+		# Ejemplo de uso
+		arr = [10, 7, 8, 9, 1, 5]
+		n = len(arr)
+		sorted_arr = quick_sort(arr, 0, n - 1)
+		print(f"Lista ordenada: {sorted_arr}")
+
+		```
+
+		Complejidad Temporal:
+
+		    Peor Caso: O(n^2)
+
+		        Ocurre cuando el pivote elegido es siempre el más grande o el más pequeño elemento.
+
+		    Mejor Caso: O(nlog⁡n)
+
+		        Ocurre cuando el pivote divide la lista en dos mitades casi iguales en cada iteración.
+
+		    Caso Promedio: O(nlog⁡n)
+
+		        Generalmente, debido a la aleatoriedad del pivote.
+
+
+		Complejidad Espacial
+
+		    Espacio Adicional: O(log⁡n)
+
+		        En la mayoría de las implementaciones, debido a la pila de llamadas recursivas.
+
+
+	Ventajas
+
+		Generalmente, es más rápido en promedio que otros algoritmos O(nlog⁡n) debido a su naturaleza de acceso en memoria.
+
+	    Ordena en el lugar (in-place).
+
+	    Es ampliamente utilizado y bien estudiado, con muchas optimizaciones disponibles.
+
+
+	Desventajas:
+
+	    El peor caso es O(n^2), aunque esto puede ser mitigado con buenas estrategias para la elección del pivote (como elegir uno al azar).
+
+	    No es estable (el orden relativo de elementos iguales puede cambiar).
+
+	    La implementación recursiva puede causar un desbordamiento de pila para listas muy gran grandes.
 
 
 
@@ -2086,6 +2797,673 @@
     	Árboles AVL.
     	
     	Heaps.
+
+
+    Algoritmos de Recorrido:
+
+    	Son técnicas utilizadas para visitar todos los nodos en una estructura de datos, típicamente grafos o árboles. 
+
+    	Estos algoritmos son fundamentales en ciencias de la computación y tienen aplicaciones en diversas áreas, como la búsqueda de información, la optimización de rutas, y la inteligencia artificial.
+
+
+    	1. Recorrido en Árboles:
+
+    		1. Recorrido en Profundidad (DFS - Depth First Search):
+
+				El recorrido en profundidad es un algoritmo que visita todos los nodos de un árbol (o un grafo) explorando tan lejos como sea posible a lo largo de cada rama antes de retroceder.
+
+
+			Tipos de Recorridos DFS en Árboles:
+
+			    Preorden (Preorder):
+			        
+			        Visita la raíz.
+
+			        Recorre el subárbol izquierdo.
+
+			        Recorre el subárbol derecho.
+
+			    Inorden (Inorder):
+
+			        Recorre el subárbol izquierdo.
+
+			        Visita la raíz.
+			        Recorre el subárbol derecho.
+
+			    Postorden (Postorder):
+
+			        Recorre el subárbol izquierdo.
+
+			        Recorre el subárbol derecho.
+
+			        Visita la raíz
+
+
+			Ejemplo de Recorridos DFS:
+
+				```
+					1
+				   / \
+				  2   3
+				 / \
+				4   5
+
+				```
+
+				Preorden: 1, 2, 4, 5, 3
+
+    			Inorden: 4, 2, 5, 1, 3
+    			
+    			Postorden: 4, 5, 2, 3, 1
+
+
+    		2. Recorrido en Anchura (BFS - Breadth First Search)
+
+				El recorrido en anchura visita todos los nodos de un árbol (o un grafo) nivel por nivel, es decir, primero visita todos los nodos en el nivel actual antes de proceder a los nodos en el siguiente nivel.
+
+				```
+				    1
+				   / \
+				  2   3
+				 / \
+				4   5
+
+				```
+
+				BFS: 1, 2, 3, 4, 5
+
+
+		2. Recorrido en Grafos
+			
+			Recorrido en Profundidad (DFS)
+
+				El DFS en grafos funciona de manera similar al DFS en árboles. 
+
+				Utiliza una pila (puede ser la pila de llamadas del sistema en una implementación recursiva) para recordar los vértices que debe visitar.			
+
+
+			Recorrido en Anchura (BFS)
+
+				El BFS en grafos utiliza una cola para recordar los vértices que debe visitar.
+
+
+			Recorrido en Anchura (BFS)
+
+				El BFS en grafos utiliza una cola para recordar los vértices que debe visitar.
+
+
+			DFS vs BFS:
+
+				DFS:
+
+    				Puede ser implementado de manera recursiva o con una pila.
+
+    				Es útil para explorar todos los caminos en laberintos y problemas similares.
+
+   					Puede quedar atrapado en ciclos infinitos si no se manejan correctamente los grafos cíclicos.
+
+
+   				BFS:
+
+    				Utiliza una cola y es menos propenso a quedarse atrapado en ciclos.
+
+    				Encuentra el camino más corto en grafos no ponderados.
+
+ 					Requiere más memoria que DFS, ya que almacena todos los nodos en el nivel actual.
+
+
+			Los algoritmos de recorrido, tanto DFS como BFS, son herramientas fundamentales para la exploración y manipulación de estructuras de datos como árboles y grafos.
+
+			Cada uno tiene sus propias ventajas y aplicaciones ideales, dependiendo de la estructura de datos y del problema específico a resolver.
+
+
+
+|| DFS
+	
+	Recorrido en Profundidad (Depth First Search) es algoritmo fundamental para recorrer o buscar en estructuras de datos como árboles y grafos. 
+
+	DFS explora tan lejos como sea posible a lo largo de cada rama antes de retroceder
+
+
+	Estrategia de Exploración:
+
+	    El algoritmo comienza en un nodo inicial y explora cada uno de sus vecinos antes de retroceder.
+
+	    Esto implica ir hacia el fondo de una rama del grafo antes de intentar otros caminos.
+
+
+	Estructura de Datos Utilizada:
+
+	    DFS puede implementarse de forma recursiva utilizando la pila de llamadas del sistema.
+
+	    También puede implementarse de manera iterativa usando una pila explícita.
+
+
+	Visitas y Retrocesos:
+
+	    Un nodo se marca como visitado cuando se llega a él por primera vez.
+
+	    El algoritmo retrocede cuando no hay más nodos adyacentes no visitados.
+
+
+
+	Implementación Recursiva:
+
+		```python
+
+		def dfs_recursive(graph, start, visited=None):
+		    if visited is None:
+		        visited = set()
+		    visited.add(start)
+		    print(start)  # O almacenar en una lista para otros usos
+		    for neighbor in graph[start]:
+		        if neighbor not in visited:
+		            dfs_recursive(graph, neighbor, visited)
+		    return visited
+
+		# Ejemplo de uso
+		graph = {
+		    'A': ['B', 'C'],
+		    'B': ['A', 'D', 'E'],
+		    'C': ['A', 'F'],
+		    'D': ['B'],
+		    'E': ['B', 'F'],
+		    'F': ['C', 'E']
+		}
+
+		dfs_recursive(graph, 'A')
+
+		```
+
+	
+	Implementación Iterativa:		
+
+		```python
+
+		def dfs_iterative(graph, start):
+		    visited = set()
+		    stack = [start]
+		    while stack:
+		        vertex = stack.pop()
+		        if vertex not in visited:
+		            visited.add(vertex)
+		            print(vertex)  # O almacenar en una lista para otros usos
+		            stack.extend([neighbor for neighbor in graph[vertex] if neighbor not in visited])
+		    return visited
+
+		# Ejemplo de uso
+		dfs_iterative(graph, 'A')
+
+		```
+
+
+	Funcionamiento:
+
+		Considerando el siguiente grafo.
+
+
+		```
+		    A
+		   / \
+		  B   C
+		 / \   \
+		D   E   F
+		 \ /   /
+		  F - E
+
+		```
+
+		DFS Recursivo desde 'A':
+
+		    Comienza en 'A', marca 'A' como visitado.
+
+		    Visita 'B', marca 'B' como visitado.
+
+		    Visita 'D', marca 'D' como visitado.
+
+		    'D' tiene un vecino 'F' no visitado, visita 'F', marca 'F' como visitado.
+
+		    Retrocede a 'D', luego a 'B'.
+
+		    Visita 'E', marca 'E' como visitado.
+
+		    'E' tiene un vecino 'F' ya visitado, retrocede a 'B', luego a 'A'.
+
+		    Visita 'C', marca 'C' como visitado.
+
+		    'C' tiene un vecino 'F' ya visitado.
+	
+		
+		El orden de visita será: A, B, D, F, E, C.
+
+
+	Complejidad de DFS
+
+	    Complejidad Temporal:
+	        
+	        En un grafo representado por listas de adyacencia, la complejidad temporal de DFS es O(V+E), donde V es el número de vértices y E es el número de aristas.
+
+
+	    Complejidad Espacial:
+	        
+	        En el caso de la implementación recursiva, la complejidad espacial es O(V) debido a la pila de llamadas del sistema.
+
+
+        En la implementación iterativa, la complejidad espacial también es O(V) debido a la pila explícita utilizada.
+
+
+    Aplicaciones de de DFS
+
+	    Detección de Ciclos:
+
+	        DFS puede ser utilizado para detectar ciclos en un grafo.
+
+	    Componentes Conectados:
+
+	        Ayuda a encontrar componentes conectados en grafos no dirigidos.
+
+	    Orden Topológico:
+
+	        Se utiliza en grafos dirigidos acíclicos (DAG) para realizar un orden topológico.
+
+	    Resolución de Laberintos y Puzzles:
+
+	        Útil para resolver problemas de búsqueda exhaustiva, como laberintos y puzzles que requieren explorar todos los caminos posibles.
+
+
+	La implementación de DFS puede ser sencilla, pero su capacidad para resolver problemas complejos y su eficiencia lo convierten en una herramienta esencial en ciencias de la computación.
+
+
+
+|| BFS
+	
+	Recorrido en Anchura (Breadth First Search) es un algoritmo utilizado para recorrer o buscar en estructuras de datos como grafos y árboles. 
+
+	A diferencia del DFS, el BFS explora todos los nodos en el nivel actual antes de moverse al siguiente nivel, lo que lo hace particularmente útil para encontrar el camino más corto en grafos no ponderados .
+
+
+	Estrategia de Exploración:
+
+	    Comienza en un nodo inicial y explora todos los vecinos en el nivel actual antes de pasar a los vecinos del siguiente nivel.
+
+
+	Estructura de Datos Utilizada:
+
+	    Utiliza una cola (FIFO) para recordar los nodos que debe visitar.
+
+
+	Visitas Nivel por Nivel:
+
+	    Los nodos se visitan nivel por nivel, lo que garantiza que se encuentran los caminos más cortos en grafos no ponderados.
+	
+
+	Implementación:
+
+		Usando un cola. 
+
+		```python
+
+		from collections import deque
+
+		def bfs(graph, start):
+		    visited = set()
+		    queue = deque([start])
+		    visited.add(start)
+		    while queue:
+		        vertex = queue.popleft()
+		        print(vertex)  # O almacenar en una lista para otros usos
+		        for neighbor in graph[vertex]:
+		            if neighbor not in visited:
+		                visited.add(neighbor)
+		                queue.append(neighbor)
+		    return visited
+
+		# Ejemplo de uso
+		graph = {
+		    'A': ['B', 'C'],
+		    'B': ['A', 'D', 'E'],
+		    'C': ['A', 'F'],
+		    'D': ['B'],
+		    'E': ['B', 'F'],
+		    'F': ['C', 'E']
+		}
+
+		bfs(graph, 'A')
+
+		```
+
+
+	Funcionamiento:
+
+		```
+		    A
+		   / \
+		  B   C
+		 / \   \
+		D   E   F
+		 \ /   /
+		  F - E
+
+		```
+
+		BFS desde 'A':
+
+		    Comienza en 'A', marca 'A' como visitado.
+
+		    Coloca 'A' en la cola.
+
+		    Desencola 'A' y visita sus vecinos: 'B' y 'C'.
+
+		    Marca 'B' y 'C' como visitados y los coloca en la cola.
+
+		    Desencola 'B' y visita sus vecinos: 'D' y 'E'.
+
+		    Marca 'D' y 'E' como visitados y los coloca en la cola.
+
+		    Desencola 'C' y visita su vecino: 'F'.
+
+		    Marca 'F' como visitado y lo coloca en la cola.
+
+		    Desencola 'D'. 
+
+		    Sus vecinos ya están visitados, no hace nada.
+
+		    Desencola 'E'. 
+
+		    Sus vecinos ya están visitados, no hace nada.
+
+		    Desencola 'F'. 
+
+		    Sus vecinos ya están visitados, no hace nada.
+
+		El orden de visita será: A, B, C, D, E, F.
+
+
+	Complejidad de BFS
+
+	    Complejidad Temporal:
+
+	        En un grafo representado por listas de adyacencia, la complejidad temporal de BFS es O(V+E), donde VV es el número de vértices y EE es el número de aristas.
+
+	    Complejidad Espacial:
+
+	        La complejidad espacial es O(V), ya que se debe almacenar la cola y el conjunto de nodos visitados.
+
+
+	Aplicaciones de BFS
+
+	    Encontrar el Camino Más Corto:
+
+	        BFS es ideal para encontrar el camino más corto en grafos no ponderados.
+
+	    Nivel de Nodos:
+
+	        Determina el nivel o la profundidad de los nodos en un grafo.
+
+	    Conectividad:
+
+	        Puede ser usado para verificar si un grafo no dirigido es conexo.
+
+	    Algoritmos de Flujo de Red:
+
+	        BFS se utiliza en el algoritmo de Edmonds-Karp para encontrar el flujo máximo en una red de flujo.
+
+	    Búsqueda de Palabra en Tablero:
+
+	        Utilizado en problemas como la búsqueda de palabras en un tablero de letras (e.g., Boggle).
+
+
+	DFS vs BFS:
+
+		BFS:
+
+		    Explora por niveles.
+
+		    Encuentra el camino más corto en grafos no ponderados.
+
+		    Puede requerir más memoria, ya que mantiene todos los nodos en el nivel actual en la cola.
+
+		DFS:
+
+		    Explora tan lejos como sea posible antes de retroceder.
+
+		    No garantiza encontrar el camino más corto.
+
+		    Generalmente requiere menos memoria que BFS, pero puede quedar atrapado en ciclos si no se manejan correctamente.
+
+
+
+|| Teoría de Grafos
+	
+	Área de las matemáticas y la informática que estudia los grafos, que son estructuras formadas por vértices (nodos) y aristas (enlaces) que conectan pares de vértices.
+
+
+	Elementos:
+
+		Vértices (Nodos):
+
+		    Representan objetos o entidades en un grafo.
+
+		    Se denotan comúnmente como V o N.
+
+		Aristas (Enlaces):
+
+		    Representan las conexiones entre los vértices.
+
+		    Se denotan comúnmente como E.
+
+
+	Tipos de Grafos:
+
+		1. Grafo Dirigido (Digrafo):
+
+		    Las aristas tienen una dirección, es decir, van de un vértice a otro.
+
+		    Se representan como pares ordenados (u,v).
+
+
+		2. Grafo No Dirigido:
+
+		    Las aristas no tienen dirección.
+
+		    Se representan como conjuntos no ordenados {u,v}.
+
+
+		3. Grafo Ponderado:
+
+		    Las aristas tienen asociados valores o pesos que representan el costo, la distancia, o alguna otra medida.
+
+
+		4. Grafo No Ponderado:
+
+		    Las aristas no tienen pesos asociados.
+
+
+		5. Grafo Conexo:
+
+		    Existe un camino entre cualquier par de vértices en el grafo.
+
+
+		6. Grafo Desconexo:
+
+		    No todos los vértices están conectados por un camino.
+
+
+		7. Grafo Bipartito:
+
+		    Los vértices se pueden dividir en dos conjuntos disjuntos, donde no hay aristas entre vértices del mismo conjunto.
+
+
+		8. Grafo Completo:
+
+		    Cada par de vértices está conectado por una arista.		
+
+
+	Propiedades: 
+
+		Grado de un Vértice:
+
+		    Número de aristas incidentes en un vértice. 
+
+		    En un grafo dirigido, se distingue entre grado de entrada y grado de salida.
+
+		Camino:
+
+		    Secuencia de aristas que conectan un conjunto de vértices.
+
+		Ciclo:
+
+		    Un camino que comienza y termina en el mismo vértice y no repite aristas ni vértices (excepto el inicio y el final).
+
+		Distancia:
+
+		    Número mínimo de aristas que hay que recorrer para ir de un vértice a otro.
+
+
+	Problemas Clásicos:
+
+		Camino Más Corto:
+
+		    Encontrar la ruta de menor costo entre dos vértices.
+
+		    Algoritmos: Dijkstra, Bellman-Ford.
+
+
+		Árbol de Expansión Mínima:
+
+		    Encontrar un subconjunto de aristas que conecten todos los vértices con el peso total mínimo.
+
+		    Algoritmos: Kruskal, Prim.
+
+
+		Coloración de Grafos:
+
+		    Asignar colores a los vértices de un grafo de tal manera que no haya dos vértices adyacentes del mismo color.
+
+
+		Flujo Máximo:
+
+		    Encontrar la máxima cantidad de flujo que se puede enviar a través de una red de flujo desde una fuente a un sumidero.
+		    Algoritmos: Ford-Fulkerson, Edmonds-Karp.
+
+
+		Emparejamiento en Grafos Bipartitos:
+
+		    Emparejar los vértices de dos conjuntos de tal manera que el número de emparejamientos sea máximo.
+
+		    Algoritmos: Hopcroft-Karp.
+
+
+	Algoritmos de Recorrido en Grafos
+
+	    Búsqueda en Profundidad (DFS):
+
+	        Explora lo más profundo posible a partir de cada vértice antes de retroceder.
+
+	        Utilizado para detectar ciclos, ordenar topológicamente, y encontrar componentes fuertemente conexos.
+
+
+	    Búsqueda en Anchura (BFS):
+
+	        Explora todos los vértices en el nivel actual antes de moverse al siguiente nivel.
+
+	        Utilizado para encontrar el camino más corto en grafos no ponderados y en algoritmos de flujo.
+
+
+	Representaciones de Grafos
+
+	    Lista de Adyacencia:
+
+	        Un array o lista donde cada posición contiene una lista de los vértices adyacentes a un vértice específico.
+
+	        Eficiente en términos de espacio para grafos dispersos.
+
+
+	    Matriz de Adyacencia:
+
+	        Una matriz n×n, donde n es el número de vértices, y el valor en la posición (i,j) indica si existe una arista entre los vértices i y j.
+
+	        Eficiente para grafos densos.
+
+
+	Aplicaciones de la Teoría de Grafos
+
+	    Redes de Computadoras:
+
+	        Modelar la conectividad y las rutas en redes de computadoras.
+
+	    Redes Sociales:
+
+	        Representar relaciones y conexiones entre personas.
+
+	    Sistemas de Transporte:
+
+	        Optimizar rutas y planificar caminos en sistemas de transporte.
+
+	    Biología Computacional:
+
+	        Modelar redes de interacción genética y análisis de estructuras moleculares.
+
+	    Inteligencia Artificial:
+
+	        Resolver problemas de planificación y búsqueda.
+
+
+	Ejemplo:
+
+		Implentación de un grafo y un algoritmo de recorrido en profundidad (DFS).
+
+		```python
+
+		class Grafo:
+		    def __init__(self):
+		        self.grafo = {}
+
+		    def agregar_vertice(self, vertice):
+		        if vertice not in self.grafo:
+		            self.grafo[vertice] = []
+
+		    def agregar_arista(self, vertice1, vertice2):
+		        if vertice1 in self.grafo and vertice2 in self.grafo:
+		            self.grafo[vertice1].append(vertice2)
+		            self.grafo[vertice2].append(vertice1)  # Para un grafo no dirigido
+
+		    def dfs(self, inicio, visitados=None):
+		        if visitados is None:
+		            visitados = set()
+		        visitados.add(inicio)
+		        print(inicio, end=' ')
+		        for vecino in self.grafo[inicio]:
+		            if vecino not in visitados:
+		                self.dfs(vecino, visitados)
+
+		# Ejemplo de uso
+		g = Grafo()
+		g.agregar_vertice('A')
+		g.agregar_vertice('B')
+		g.agregar_vertice('C')
+		g.agregar_arista('A', 'B')
+		g.agregar_arista('A', 'C')
+		g.agregar_arista('B', 'C')
+
+		print("Recorrido DFS:")
+		g.dfs('A')
+
+		```
+
+
+
+|| Árbol 
+	
+
+|| Árbol AVL
+
+
+|| Heap
+
+
+|| Grafo
+
 
 
 
