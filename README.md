@@ -2238,6 +2238,212 @@
 
 
 
+|| Big-O
+	
+	Es una forma de describir la eficiencia de un algoritmo en términos de su rendimiento y uso de recursos, específicamente tiempo y espacio. 
+
+	Esta notación se centra en el comportamiento asintótico del algoritmo, es decir, cómo se comporta cuando el tamaño de la entrada se aproxima al infinito.
+
+
+	Definición:
+
+		Big-O describe una cota superior asintótica para la complejidad de un algoritmo.
+
+		En otras palabras, proporciona una estimación del máximo número de operaciones que un algoritmo realizará en función del tamaño de la entrada.
+
+
+	Propósito:
+
+		Ayuda a comparar la eficiencia de diferentes algoritmos y elegir el más adecuado para un problema específico.
+
+
+	Formulación:
+
+		Formalmente, decimos que una función f(n) es O(g(n)) si existen constantes positivas c y n_0​ tales que f(n)≤c⋅g(n) para todo n≥n_0.
+
+
+
+	Ejemplos: 
+
+		1. O(1) - Constante:
+
+    		La complejidad es constante si el tiempo de ejecución no cambia con el tamaño de la entrada.
+
+    		Acceder a un elemento de un array por su índice:
+
+    		```python
+
+    		def get_first_element(arr):
+    			return arr[0]
+
+    		```
+
+
+    	2. O(n) - Lineal:
+
+    		La complejidad es lineal si el tiempo de ejecución crece de manera proporcional al tamaño de la entrada.
+
+    		Recorrer una lista y sumar sus elementos:
+
+    		```python
+
+    		def sum_elements(arr):
+			    total = 0
+			    for element in arr:
+			        total += element
+			    return total
+
+    		```
+
+
+		3. O(n^2) - Cuadrática:
+
+    		La complejidad es cuadrática si el tiempo de ejecución es proporcional al cuadrado del tamaño de la entrada.
+
+    		Ordenar una lista usando Bubble Sort.
+
+    		```python
+
+    		def bubble_sort(arr):
+			    n = len(arr)
+			    for i in range(n):
+			        for j in range(0, n-i-1):
+			            if arr[j] > arr[j+1]:
+			                arr[j], arr[j+1] = arr[j+1], arr[j]
+
+    		```  
+
+		
+		4. O(logn) - Logarítmica:
+
+    		La complejidad es logarítmica si el tiempo de ejecución crece de manera logarítmica con el tamaño de la entrada.
+
+    		Búsqueda binaria en una lista ordenada:
+
+    		```python
+
+    		def binary_search(arr, target):
+			    low = 0
+			    high = len(arr) - 1
+
+			    while low <= high:
+			        mid = (low + high) // 2
+
+			        if arr[mid] == target:
+			            return mid
+			        elif arr[mid] < target:
+			            low = mid + 1
+			        else:
+			            high = mid - 1
+
+			    return -1
+
+    		```		
+
+
+    	5. O(nlogn) - Lineal Logarítmica:
+
+    		La complejidad es lineal logarítmica si el tiempo de ejecución es proporcional al tamaño de la entrada multiplicado por el logaritmo del tamaño de la entrada.
+
+    		Ordenar una lista usando Merge Sort.
+
+    		```python
+
+    		def merge_sort(arr):
+			    if len(arr) > 1:
+			        mid = len(arr) // 2
+			        L = arr[:mid]
+			        R = arr[mid:]
+
+			        merge_sort(L)
+			        merge_sort(R)
+
+			        i = j = k = 0
+			        while i < len(L) and j < len(R):
+			            if L[i] < R[j]:
+			                arr[k] = L[i]
+			                i += 1
+			            else:
+			                arr[k] = R[j]
+			                j += 1
+			            k += 1
+
+			        while i < len(L):
+			            arr[k] = L[i]
+			            i += 1
+			            k += 1
+
+			        while j < len(R):
+			            arr[k] = R[j]
+			            j += 1
+			            k += 1
+
+			    return arr
+
+    		```
+
+
+    Reglas y Propiedades de Big-O:
+
+    	1. Constantes y Coeficientes:
+
+    		En la notación Big-O, las constantes y los coeficientes se omiten porque el enfoque está en el crecimiento asintótico.
+
+    		Ejemplo: O(2n) y O(3n) se simplifican a O(n).
+
+
+    	2. Términos Dominantes:
+
+    		Solo se considera el término dominante en la notación Big-O.
+
+    		Ejemplo: O(n^2+n) se simplifica a O(n^2).
+
+
+    	3. Sumas de Complejidades:
+
+		    Si un algoritmo realiza dos operaciones secuenciales con complejidades O(f(n)) y O(g(n)), la complejidad combinada es O(f(n)+g(n)), y se toma el término dominante.
+
+		    Ejemplo: Si una función tiene partes O(n) y O(n^2), la complejidad total es O(n^2).
+
+
+		4. Multiplicación de Complejidades:
+
+    		Si un algoritmo tiene una estructura anidada (por ejemplo, un bucle dentro de otro), se multiplican las complejidades.
+
+    		Ejemplo: Un bucle O(n) dentro de otro bucle O(n)O(n) resulta en O(n×n)=O(n^2)
+
+
+    Ejemplo comparativo: 
+
+    	Función que realiza una búsqueda lineal seguida de una ordenación por burbuja
+
+    	```python
+
+    	def example_function(arr, target):
+		    # Búsqueda lineal: O(n)
+		    for i in range(len(arr)):
+		        if arr[i] == target:
+		            return True
+
+		    # Ordenación por burbuja: O(n^2)
+		    n = len(arr)
+		    for i in range(n):
+		        for j in range(0, n-i-1):
+		            if arr[j] > arr[j+1]:
+		                arr[j], arr[j+1] = arr[j+1], arr[j]
+		    
+		    return False
+
+    	```
+
+	    Búsqueda Lineal: O(n)
+		
+		Ordenación por Burbuja: O(n^2).
+		
+		Complejidad Total: O(n)+O(n^2) = O(n^2) (se toma el término dominante).
+
+
+
 || Análisis de Algoritmos
 
 	Es una rama de las ciencias de la computación que estudia el rendimiento de los algoritmos, especialmente su tiempo de ejecución y requerimientos de espacio.
@@ -2251,6 +2457,396 @@
 	El ordenamiento de burbuja es simple pero lento para bases de datos grandes. 
 
 	El ordenamiento radix que es muy rapido y eficiente cuando se trata de ordenar linealmente grandes grupos de números cortos pero no funciona tan bien con números extensos.  
+
+
+	El objetivo del análisis de algoritmos es hacer comparaciones significativas entre algoritmos, pero hay algunos problemas:
+
+		1. El rendimiento relativo de los algoritmos podría depender de características del hardware, por lo cual un algoritmo podría ser más rápido en la 'Máquina A' y otro en la 'Máquina B'. 
+
+		La solución general a este problema es especificar un modelo de máquina y analizar el número de pasos, u operaciones, que un algoritmo requiere según un modelo de máquina dado.
+
+
+		[Respecto a Radix Sort, si tienes una pregunta como esta en una entrevista, pienso que una mejor respuesta es, “La manera más rápida de ordenar un millón de enteros es utilizar cualquier función de ordenamiento que sea proporcionada por el lenguaje que estoy utilizando. 
+
+		Su rendimiento es suficientemente bueno para la gran mayoría de las aplicaciones, pero si resulta que mi aplicación fue muy lenta, utilizaría un analizador de rendimiento para ver dónde fue utilizado el tiempo. 
+
+		Si pareciera que un algoritmo de ordenamiento más rápido tendría un efecto importante en el rendimiento, entonces buscaría una buena implementación del ordenamiento radix.”]
+
+
+		2. El rendimiento relativo podría depender de los detalles del conjunto de datos. 
+
+		Por ejemplo, algunos algoritmos de ordenamiento se ejecutan de manera más rápida si los datos ya están parcialmente ordenados; otros algoritmos se ejecutan de manera más lenta en este caso. 
+
+		Una manera común de evitar este problema es analizar el peor de los casos. 
+
+		A veces es útil analizar el rendimiento del caso promedio, pero eso es generalmente más difícil, y el conjunto de casos sobre el cual se establece el promedio podría no ser obvio.
+
+
+		3. El rendimiento relativo depende también del tamaño del problema. 
+
+		Un algoritmo de ordenamiento que es rápido para listas pequeñas podría ser lento para listas largas.
+
+		La solución usual a este problema es expresar el tiempo de ejecución (o número de operaciones) como una función del tamaño del problema, y agrupar funciones en categorías dependiendo de qué tan rápido crecen a medida que el tamaño del problema aumenta.
+
+
+	Lo bueno de este tipo de comparaciones es que asegura una clasificación simple de los algoritmos. 
+
+	Por ejemplo, si sé que el tiempo de ejecución del 'Algorigmo A' tiende a ser 'proporcional' al tamaño de la entrada, n, y el algoritmo B tiende a ser proporcional a n^2, entonces espero que A sea más rápido que B, al menos para valores grandes de n, aunque hay consideraciones.
+
+
+	Orden de crecimiento:
+
+		Supongamos que has analizado dos algoritmos y has expresado sus tiempos de ejecución en términos del tamaño de la entrada: 
+
+			Al algoritmo A le toma 100n + 1 pasos resolver un problema con tamaño n; al algoritmo B le toma n^2+n+1 pasos.
+
+		La siguiente tabla muestra el tiempo de ejecución de estos algoritmos para diferentes tamaños de problema:
+
+		Tam. entrada 	Tiem ejec. A 	Tiem ejec. B
+		10 				1.001 			111
+		1.00			10.001 			10.101
+		1.000 			100.001 		1.001.001
+		2.0000			1.000.001 		100.010.001
+
+
+		Cuando n = 10, el algoritmo A se ve bastante mal; toma casi 10 veces más que el algoritmo B.
+
+		Pero para n = 100 son casi lo mismo, y para valores más grandes A es mucho mejor.
+
+		La razón fundamental es que, para valores grandes de n, cualquier función que contiene el término n^2 crecerá más rápido que una función cuyo término principal es n. 
+
+		El 'término principal' es el término con el exponente más alto.
+
+		Para el algoritmo A, el término principal tiene un coeficiente grande, 100, que es el motivo por el cual B es mejor que A para n pequeño. 
+
+		Pero a pesar de los coeficientes, siempre habrá algún valor de n donde an^2 > bn, para cualquier valor de a y b.
+
+		El mismo argumento se aplica a los términos no principales.
+
+		Incluso si el tiempo de ejecución del algoritmo A fuera n + 1000000, seguiría siendo mejor que el algoritmo B para n suficientemente grande.	
+
+
+		En general, esperamos que un algoritmo con un 'término principal' más pequeño sea un mejor algoritmo para problemas grandes, pero para problemas más pequeños puede haber un 'punto de cruce' donde otro algoritmo es mejor. 
+
+		La ubicación del 'punto de cruce' depende de los detalles de los algoritmos, las entradas y el hardware, por lo cual usualmente se ignora para propósitos de análisis algorítmico. 
+
+		Pero eso no significa que puedes olvidarlo.
+
+		Si dos algoritmos tienen el mismo término de orden principal, es difícil decir cuál es mejor; nuevamente, la respuesta depende de los detalles. 
+
+		Entonces para análisis algorítmico, las 'funciones con el mismo término principal' se consideran equivalentes, incluso si tienen coeficientes diferentes.
+
+		Un 'orden de crecimiento' es un conjunto de funciones cuyo comportamiento de crecimiento se considera equivalente. 
+
+		Por ejemplo, 2n, 100n y n + 1 pertenecen al mismo orden de crecimiento, el cual se escribe O(n) en 'notación O grande' (en inglés, Big-Oh) y a menudo llamada 'lineal' porque cada función de dicho conjunto crece de manera lineal con n.
+
+		Todas las funciones con término principal n^2 pertenecen a O(n^2): se llaman cuadráticas.
+
+
+		La siguiente tabla muestra algunos de los órdenes de crecimiento que aparecen más comúnmente en el análisis algorítmico, en orden creciente de ineficiencia.
+
+		Orden de crecimiento 	Nombre
+		O(1)					Constante
+		O(log_b n)				Log (cualquier base)
+		O(n)					Lineal
+		O(nlog_b n)	 			Linearítmica
+		O(n^2) 					Cuadrática
+		O(n^3) 					Cubíca
+		O(c^n) 					Exp (cualquier c)
+
+
+		Para los términos logarítmicos, la base del logarítmo no importa: cambiar las bases es equivalente a multiplicar por una constante, la cual no cambia el orden de crecimiento. 
+
+		De igual manera, todas las funciones exponenciales pertenecen al mismo orden de crecimiento, independiente de la base del exponente. 
+
+		Las funciones exponenciales crecen de manera muy rápida, por lo cual los algoritmos exponenciales solo son útiles para problemas pequeños.
+
+		Los programadores que se preocupan del rendimiento a menudo encuentran este tipo de análisis difícil de tragar.
+
+		Ellos tienen un punto: a veces 'los coeficientes y los términos no principales hacen una diferencia real'. 
+
+		'A veces los detalles del hardware, el lenguaje de programación y las características de la entrada hacen una gran diferencia'. 
+
+		Y para problemas pequeños, el orden de crecimiento es irrelevante.
+
+		Pero si tienes en cuenta esas consideraciones, el análisis algorítmico es una herramienta útil. 
+
+		Al menos 'para problemas grandes, el “mejor” algoritmo es generalmente mejor, y a veces es mucho mejor'. 
+
+		La diferencia entre dos algoritmos con el mismo orden de crecimiento es generalmente un factor constante, ¡pero la diferencia entre un buen algoritmo y un mal algoritmo no tiene límites!
+
+
+	Análisis de operaciones básicas de Python:
+
+		En Python, la mayoría de las 'operaciones aritméticas son de tiempo constante'; la multiplicación generalmente toma más tiempo que la adición y sustracción, y la división toma aún más, pero estos tiempos de ejecución no dependen de la magnitud de los operandos. 
+
+		Los 'enteros' muy grandes son una excepción: en ese caso el tiempo de ejecución aumenta con el número de dígitos. 
+
+		Las 'operaciones de indexado —leer o escribir elementos en una secuencia o diccionario— también son de tiempo constante', independiente del tamaño de la estructura de datos.
+
+		Un 'bucle for que recorre una secuencia o diccionario' es generalmente 'lineal', 'siempre y cuando todas las operaciones en el cuerpo del bucle sean de tiempo constante'.
+
+		Por ejemplo, sumar los elementos de una lista es lineal:
+			
+			```
+			total = 0
+			for x in t:
+				total += x
+
+			```
+
+		La función incorporada 'sum' también es 'lineal' porque hace lo mismo, pero 'tiende a ser más rápida porque es una implementación más eficiente'; en el lenguaje del análisis algorítmico, tiene un coeficiente principal más pequeño. 
+
+		Como regla general, si el cuerpo de un bucle está en O (n^a) entonces el bucle completo está en O (n^a+1). 
+
+		La excepción es cuando puedes mostrar que el bucle se interrumpe después de un número constante de iteraciones. 
+
+		Si un bucle se ejecuta k veces independiente de n, entonces el bucle está en O (n^a), incluso para k grande. 
+
+		Multiplicar por k no cambia el orden de crecimiento, ni tampoco dividir. 
+
+		Entonces, si el cuerpo de un bucle está en O (n^a) y se ejecuta n/k veces, el bucle está en O (n^a+1), incluso para k grande. 
+
+		La mayoría de las operaciones de 'cadena y de tupla son lineales', excepto 'indexar y len, que es de tiempo constante'. 
+
+		Las funciones incorporadas 'min y max son lineales'. 
+
+		El tiempo de ejecución de una operación de 'trozo es proporcional a la longitud de la salida, pero independiente del tamaño de la entrada'. 
+
+		La 'concatenación de cadenas es lineal: el tiempo de ejecución depende de la suma de las longitudes de los operandos'.
+
+
+		Todos los 'métodos de cadena son lineales', pero si las longitudes de las cadenas están 'acotadas por una constante' —por ejemplo, operaciones en caracteres individuales— se consideran de tiempo constante.
+
+		El método de cadena join es lineal: el tiempo de ejecución depende de la longitud total de las cadenas.
+
+		La mayoría de los métodos de lista son lineales, pero hay algunas excepciones:
+
+			1. Agregar un elemento al final de una lista es de tiempo constante en promedio; cuando se queda sin espacio, ocasionalmente es copiada a una ubicación más grande, pero el tiempo total para n operaciones es O(n), por lo cual el tiempo promedio para cada operación es O(1).
+
+			2. Eliminar un elemento del final de una lista es de tiempo constante.
+
+			3. El ordenamiento es O (n log n) .
+
+
+		La mayoría de las 'operaciones y métodos de diccionario son de tiempo constante', pero hay algunas excepciones:
+
+			1. El tiempo de ejecución de 'update' es proporcional al tamaño del diccionario que se pasa como parámetro, no del diccionario que está siendo actualizado.
+
+			2. 'keys, values e items' son de tiempo constante porque devuelven iteradores. 
+
+			Pero si recorres un bucle con los iteradores, el bucle será lineal.
+
+		El rendimiento de los diccionarios es uno de los milagros menores de las ciencias de la computación.
+
+
+	Análisis de algoritmos de búsqueda:
+
+		Una búsqueda es un algoritmo que toma una colección y un ítem objetivo y determina si el objetivo está en la colección, a menudo devolviendo el índice del objetivo. 
+
+		El algoritmo de búsqueda más simple es la “búsqueda lineal”, que 'recorre los ítems de la colección en orden', deteniéndose si encuentra al objetivo. 
+
+		En el 'peor de los casos tiene que recorrer toda la colección, por lo cual el tiempo de ejecución es lineal'. 
+
+		El 'operador in' para secuencias utiliza una búsqueda lineal; los métodos de cadena como 'find y count' también. 
+
+		'Si los elementos de la secuencia están en orden, puedes utilizar una búsqueda de bisección, que es O (log n)'. 
+
+		La búsqueda de bisección es similar al algoritmo que podrías utilizar para buscar una palabra en un diccionario (un diccionario de papel, no la estructura de datos). 
+
+		En lugar de comenzar del principio y revisar cada ítem en orden, comienzas con el ítem en el medio y verificas si la palabra que buscas viene antes o después. 
+
+		Si viene antes, entonces buscas en la primera mitad de la secuencia. 
+
+		De lo contrario, buscas la segunda mitad. 
+
+		De cualquier manera, disminuyes el número de ítems restantes a la mitad. 
+
+		Si la secuencia tiene 1.000.000 de ítems, tomará cerca de 20 pasos encontrar la palabra o concluir que no está. 
+
+		Entonces, eso es cerca de 50.000 veces más rápido que una búsqueda lineal. 
+
+		'La búsqueda de bisección puede ser mucho más rápida que una búsqueda lineal, pero requiere que la secuencia esté en orden, lo cual podría requerir trabajo extra'. 
+
+		Hay otra estructura de datos, llamada 'tabla hash (en inglés, hashtable) que es incluso más rápida —puede hacer una búsqueda en tiempo constante— y no requiere que los ítems estén ordenados'. 
+
+		Los diccionarios de Python se implementan utilizando tablas hash, por lo cual la mayoría de las operaciones de diccionario, incluyendo al operador in, son de tiempo constante.
+
+
+	Tablas hash:
+
+		Para explicar cómo funcionan las tablas hash y por qué su rendimiento es tan bueno, comienzo con una implementación simple de un mapa y gradualmente lo mejoro hasta que sea una tabla hash. 
+
+		Yo utilizo Python para demostrar estas implementaciones, pero en la vida real no escribirías código como este en Python: ¡solo utilizarías un diccionario! Para el resto de este capítulo, tienes que imaginar que los diccionarios no existen y quieres implementar una estructura de datos que mapee de claves a valores. 
+
+		Las operaciones que tienes que implementar son:
+
+			add(k, v): 
+
+				Agrega un nuevo ítem que mapea de una clave k a un valor v.
+
+				Con un diccionario de Python, d, esta operación se escribe d[k] = v.
+
+			get(k):
+
+				Busca y devuelve el valor que corresponde a la clave k. 
+
+				Con un diccionario de Python, d, esta operación se escribe d[k] o d.get(k).
+
+		Por ahora, supongo que cada clave aparece una sola vez. 
+
+		La implementación más simple de esta interfaz utiliza una lista de tuplas, donde cada tupla es un par clave-valor.
+
+		```python
+
+		class LinearMap:
+			def __init__(self):
+				self.items = []
+			def add(self, k, v):
+				self.items.append((k, v))
+			def get(self, k):
+				for key, val in self.items:
+					if key == k:
+						return val
+				raise KeyError
+
+		```
+
+		add anexa una tupla clave-valor a la lista de ítems, lo cual toma tiempo constante. 
+
+		get utiliza un bucle for para buscar la lista: encuentra la clave objetivo y devuelve el valor correspondiente; de lo contrario, ocurre un KeyError . Entonces, get es lineal. 
+
+		Una alternativa es mantener la lista ordenada por clave.
+
+		Entonces get podría utilizar una búsqueda de bisección, que es O (log n). 
+
+		Pero insertar un nuevo ítem en el medio de una lista es lineal, por lo cual podría no ser la mejor opción. 
+
+		Hay otras estructuras de datos que pueden implementar add y get en tiempo logarítmico, pero eso aún no es tan bueno como el tiempo constante, así que vamos a lo siguiente. 
+
+		Una manera de mejorar LinearMap es separar la lista de pares clave-valor en listas más pequeñas. 
+
+		Aquí hay una implementación llamada BetterMap, que es una lista de 100 LinearMaps. 
+
+		Tal como veremos en un segundo, el orden de crecimiento para get aún es lineal, pero BetterMap es un paso en el camino hacia las tablas hash:
+
+		```python
+
+		class BetterMap:
+			def __init__(self, n=100):
+				self.maps = []
+				for i in range(n):
+					self.maps.append(LinearMap())
+			def find_map(self, k):
+				index = hash(k) % len(self.maps)
+				return self.maps[index]
+			def add(self, k, v):
+				m = self.find_map(k)
+				m.add(k, v)
+			def get(self, k):
+				m = self.find_map(k)
+				return m.get(k)
+		```	
+
+		__init__ crea una lista de n LinearMaps.
+
+		find_map es utilizado por add y get para averiguar en cuál mapa poner el nuevo ítem, o en cuál mapa buscar.
+
+		find_map utiliza la función incorporada hash, que toma casi cualquier objeto de Python y devuelve un entero. 
+
+		Una limitación de esta implementación es que solo funciona con claves hashables.
+
+		Los tipos mutables como las listas y los diccionarios no son hashables. 
+
+		Los objetos hashables que se consideran equivalentes devuelven el mismo valor hash, pero lo inverso no es necesariamente verdadero: dos objetos con valores diferentes pueden devolver el mismo valor hash. 
+
+		find_map utiliza el operador de módulo para ajustar los valores hash en el rango entre 0 y len(self.maps), por lo cual el resultado es un índice legal en la lista. 
+
+		Por supuesto, esto significa que muchos valores hash diferentes se ajustarán al mismo índice.
+
+		Pero si la función hash distribuye las cosas de manera muy uniforme (que es para lo que están diseñadas las funciones hash), entonces esperamos n/100 ítems por cada LinearMap. 
+
+		Dado que el tiempo de ejecución de LinearMap.get es proporcional al número de ítems, esperamos que BetterMap sea cerca de 100 veces más rápido que LinearMap.
+
+		El orden de crecimiento es aún lineal, pero el coeficiente principal es más pequeño. 
+
+		Eso es bueno, pero aún no es tan bueno como una tabla hash. 
+
+		Aquí (finalmente) está la idea clave que hace que las tablas hash sean rápidas: si puedes mantener acotada la longitud máxima de los LinearMaps, LinearMap.get es de tiempo constante. 
+
+		Todo lo que tienes que hacer es un seguimiento del número de ítems y cuando el número de ítems por cada LinearMap exceda un límite, cambiar el tamaño de la tabla hash añadiendo más LinearMaps.		
+
+		```python
+
+		class HashMap:
+			def __init__(self):
+				self.maps = BetterMap(2)
+				self.num = 0
+			def get(self, k):
+				return self.maps.get(k)
+			def add(self, k, v):
+				if self.num == len(self.maps.maps):
+					self.resize()
+					self.maps.add(k, v)
+					self.num += 1
+			def resize(self):
+				new_maps = BetterMap(self.num * 2)
+					for m in self.maps.maps:
+						for k, v in m.items:
+							new_maps.add(k, v)
+						self.maps = new_maps
+
+		```
+
+		__init__ crea un BetterMap e inicializa a num, que hace un seguimiento del número de ítems.
+
+		get solo despacha a BetterMap.
+
+		El trabajo real ocurre en add, que verifica el número de ítems y el tamaño del BetterMap: si son iguales, el número promedio de ítems por cada LinearMap es 1, entonces llama a resize.
+
+		resize crea un nuevo BetterMap , dos veces más grande que el anterior, y luego “rehashea” los ítems desde el mapa antiguo hacia el nuevo.
+
+		Rehashear es necesario porque al cambiar el número de LinearMaps cambia el denominador del operador de módulo en find_map.
+
+		Eso significa que algunos objetos que solían hacer hash en el mismo LinearMap se dividirán (que es lo que queríamos, ¿verdad?). 
+
+		El rehasheo es lineal, entonces resize es lineal, que podría parecer mal, dado que prometí que add sería de tiempo constante. 
+
+		Pero recuerda que no tenemos que cambiar de tamaño cada vez, entonces add es generalmente de tiempo constante y solo ocasionalmente lineal. 
+
+		La cantidad total de trabajo al ejecutar add n veces es proporcional a n, ¡entonces el tiempo promedio de cada add es de tiempo constante! Para ver cómo funciona esto, piensa en comenzar con un HashTable vacío y agregar una secuencia de ítems. 
+
+		Comenzamos con 2 LinearMaps, entonces los 2 primeros añadidos son rápidos (no se requiere cambiar tamaño). Digamos que estos toman una unidad de trabajo cada uno. 
+
+		El siguiente añadido requiere un cambio de tamaño, por lo cual tenemos que rehashear los primeros dos ítems (digamos que 2 unidades más de trabajo) y luego añadir el tercer ítem (una unidad más). 
+
+		Añadir el siguiente ítem cuesta 1 unidad, entonces el total hasta ahora es de 6 unidades de trabajo para 4 ítems. 
+
+		El siguiente add cuesta 5 unidades, pero los siguientes tres son solo una unidad cada uno, entonces el total es de 14 unidades para los primeros 8 añadidos. 
+
+		El siguiente add cuesta 9 unidades, pero luego podemos añadir 7 más antes del siguiente cambio de tamaño, entonces el total es de 30 unidades para los primeros 16 añadidos. 
+
+		Después de 32 añadidos, el costo total es de 62 unidades, y espero que comiences a ver el patrón. 
+
+		Después de n añadidos, donde n es potencia de dos, el costo total es de 2n −2 unidades, entonces el trabajo promedio por cada añadido es un poco menos que dos unidades.
+
+		Cuando n es una potencia de dos, ese es el mejor caso; para los otros valores de n el trabajo promedio es un poco más alto, pero eso no es importante. 
+
+		Lo importante es que es O(1).
+
+		La Figura B.1 muestra cómo funciona esto de manera gráfica. 
+
+		Cada bloque representa una unidad de trabajo. 
+
+		Las columnas muestran el trabajo total para cada añadido en orden de izquierda a derecha: los primeros dos adds cuestan 1 unidad cada uno, el tercero cuesta 3 unidades, etc. 
+
+		El trabajo extra de rehashear aparece como una secuencia de torres cada vez más altas cuyo espacio entre ellas es cada vez mayor. 
+
+		Ahora si derribas las torres, repartiendo el costo de cambiar de tamaño sobre todos los añadidos, puedes ver gráficamente que el costo total después de n añadidos es 2n − 2.
+
+		Una característica importante de este algoritmo es que, cuando cambiamos el tamaño del HashTable, este crece de manera geométrica, es decir, multiplicamos el tamaño por una constante. 
+
+		Si aumentas el tamaño de manera aritmética —añadiendo un número fijo cada vez— el tiempo promedio por cada add es lineal.
 
 
 
@@ -3455,15 +4051,743 @@
 
 || Árbol 
 	
+	Es una estructura de datos jerárquica que consiste en nodos conectados por aristas, y es un caso especial de grafo.
+
+
+	Conceptos:
+
+		Nodo: 	
+
+			Un elemento del árbol que contiene un valor o dato.
+
+		Arista (Edge): 
+
+			Conexión entre dos nodos.
+
+		Raíz (Root): 
+
+			El nodo superior de un árbol, que no tiene padres.
+
+		Hijos (Children): 
+
+			Nodos directamente conectados a un nodo específico (su padre).
+
+		Padre (Parent): 
+
+			El nodo que tiene una arista dirigida a uno de sus hijos.
+
+		Hoja (Leaf): 
+
+			Un nodo que no tiene hijos.
+
+		Subárbol (Subtree): 
+
+			Un nodo y todos sus descendientes forman un subárbol.
+
+		Nivel (Level): 
+
+			La distancia desde la raíz a un nodo específico. 
+
+			La raíz está en el nivel 0, sus hijos están en el nivel 1, y así sucesivamente.
+
+		Altura (Height): 
+
+			La longitud del camino más largo desde un nodo hasta una hoja. 
+
+			La altura de un árbol es la altura de la raíz.
+
+		Profundidad (Depth): 
+
+			La longitud del camino desde la raíz hasta un nodo específico. 
+
+			La profundidad de la raíz es 0.
+
+
+	Propiedades de los Árboles
+
+	    Acríclico: 
+
+	    	Un árbol no tiene ciclos.
+
+	    Conexión: 
+
+	    	Un árbol es un grafo conectado, es decir, hay un camino entre cualquier par de nodos.
+
+	    Nodos y Aristas: 
+
+	    	Un árbol con n nodos siempre tiene n−1 aristas.
+
+	    Unicidad de Caminos: 
+
+	    	Existe exactamente un camino entre cualquier par de nodos en un árbol.
+
+
+	Tipos de Árboles
+
+	    1. Árbol Binario: 
+
+	    	Cada nodo tiene como máximo dos hijos.
+
+	        Árbol Binario Completo:
+
+	        	Todos los niveles están completamente llenos excepto posiblemente el último, que está lleno de izquierda a derecha.
+
+	        Árbol Binario Perfecto:
+
+	        	Todos los niveles están completamente llenos.
+
+	        Árbol Binario de Búsqueda (BST): 
+
+	        	Un árbol binario donde cada nodo tiene un valor mayor que todos los valores en su subárbol izquierdo y menor que todos los valores en su subárbol derecho.
+
+
+	    2. Árbol AVL: 
+
+	    	Un árbol binario de búsqueda autobalanceado donde las alturas de los dos subárboles de un nodo difieren en no más de uno.
+
+		
+		3. Árbol Rojo-Negro: 
+
+			Un árbol binario de búsqueda autobalanceado con reglas adicionales para asegurar un equilibrio balanceado.
+
+
+		4. Árbol B: 
+
+			Un árbol autoajustable utilizado en bases de datos y sistemas de archivos.
+
+
+	Operaciones de Árboles: 
+
+		1. Inserción: 
+
+			Agregar un nuevo nodo al árbol en una posición específica según las reglas del árbol.
+
+		2. Eliminación: 
+
+			Quitar un nodo del árbol y reorganizarlo para mantener las propiedades del árbol.
+
+		3. Búsqueda: 
+
+			Encontrar un nodo con un valor específico.
+
+		4. Recorrido (Traversal):
+
+		    Preorden (Preorder):
+
+		    	Visitar la raíz, luego el subárbol izquierdo y finalmente el subárbol derecho.
+
+		    Inorden (Inorder):
+
+		    	Visitar el subárbol izquierdo, luego la raíz y finalmente el subárbol derecho.
+
+		    Postorden (Postorder):
+
+		    	Visitar el subárbol izquierdo, luego el subárbol derecho y finalmente la raíz.
+
+		    Por Nivel (Level Order):
+
+		   		Visitar los nodos nivel por nivel, de arriba hacia abajo.
+
+
+	Implementación: 
+
+		```python
+
+		class Node:
+		    def __init__(self, key):
+		        self.left = None
+		        self.right = None
+		        self.val = key
+
+		# Recorridos
+		def inorder(root):
+		    if root:
+		        inorder(root.left)
+		        print(root.val, end=' ')
+		        inorder(root.right)
+
+		def preorder(root):
+		    if root:
+		        print(root.val, end=' ')
+		        preorder(root.left)
+		        preorder(root.right)
+
+		def postorder(root):
+		    if root:
+		        postorder(root.left)
+		        postorder(root.right)
+		        print(root.val, end=' ')
+
+		# Ejemplo de uso
+		root = Node(1)
+		root.left = Node(2)
+		root.right = Node(3)
+		root.left.left = Node(4)
+		root.left.right = Node(5)
+
+		print("Recorrido Inorden:")
+		inorder(root)
+
+		print("\nRecorrido Preorden:")
+		preorder(root)
+
+		print("\nRecorrido Postorden:")
+		postorder(root)
+
+		```
+
+	
+	Aplicaciones:
+
+		Búsqueda y Ordenación: 
+
+			Los árboles binarios de búsqueda permiten búsquedas rápidas, inserciones y eliminaciones.
+		
+		Estructuras de Datos:
+
+			Utilizados en implementaciones de colas de prioridad, montículos (heaps), y otros ADTs (Abstract Data Types).
+
+		Bases de Datos: 
+
+			Los árboles B y B+ se utilizan para la indexación y recuperación eficiente de datos.
+
+		Compresión de Datos: 
+
+			Los árboles de Huffman se utilizan en algoritmos de compresión como el ZIP.
+
+
+
+|| Árbol Binario
+
+	Estructura de datos jerárquica en la que cada nodo tiene, como máximo, dos hijos: el hijo izquierdo y el hijo derecho. 
+
+	Los árboles binarios son fundamentales en informática y se utilizan en una variedad de aplicaciones, como la búsqueda y la ordenación de datos.
+
+
+	Conceptos: 
+
+		Nodo: 
+
+			La unidad básica de un árbol, que contiene un valor y referencias a sus hijos.
+
+		Raíz (Root): 
+
+			El nodo superior del árbol.
+
+		Hijos (Children): 
+
+			Los nodos directamente conectados a un nodo específico.
+
+		Padre (Parent): 
+
+			El nodo que tiene un enlace a uno de sus hijos.
+
+		Hoja (Leaf): 
+
+			Un nodo que no tiene hijos.
+
+		Subárbol (Subtree): 
+
+			Un nodo y todos sus descendientes.
+
+		Altura (Height): 
+
+			La longitud del camino más largo desde la raíz hasta una hoja.
+
+		Profundidad (Depth): 
+
+			La longitud del camino desde la raíz hasta un nodo específico.
+
+
+	Implementación: 
+
+		```python
+
+		class Node:
+		    def __init__(self, key):
+		        self.left = None
+		        self.right = None
+		        self.val = key
+
+		class BinaryTree:
+		    def __init__(self):
+		        self.root = None
+
+		    def insert(self, key):
+		        if self.root is None:
+		            self.root = Node(key)
+		        else:
+		            self._insert(self.root, key)
+
+		    def _insert(self, node, key):
+		        if key < node.val:
+		            if node.left is None:
+		                node.left = Node(key)
+		            else:
+		                self._insert(node.left, key)
+		        else:
+		            if node.right is None:
+		                node.right = Node(key)
+		            else:
+		                self._insert(node.right, key)
+
+		    def inorder(self, node):
+		        if node:
+		            self.inorder(node.left)
+		            print(node.val, end=' ')
+		            self.inorder(node.right)
+
+		    def preorder(self, node):
+		        if node:
+		            print(node.val, end=' ')
+		            self.preorder(node.left)
+		            self.preorder(node.right)
+
+		    def postorder(self, node):
+		        if node:
+		            self.postorder(node.left)
+		            self.postorder(node.right)
+		            print(node.val, end=' ')
+
+		# Ejemplo de uso
+		tree = BinaryTree()
+		tree.insert(10)
+		tree.insert(5)
+		tree.insert(20)
+		tree.insert(3)
+		tree.insert(7)
+
+		print("Recorrido Inorden:")
+		tree.inorder(tree.root)
+		print("\nRecorrido Preorden:")
+		tree.preorder(tree.root)
+		print("\nRecorrido Postorden:")
+		tree.postorder(tree.root)
+
+		```
+
+
+	Aplicaciones: 
+
+	    Árbol Binario de Búsqueda (BST): 
+
+	    	Permite operaciones eficientes de búsqueda, inserción y eliminación.
+
+	    Árboles AVL y Rojo-Negro:
+
+	    	Tipos de árboles binarios balanceados utilizados para mantener operaciones balanceadas en BST.
+
+	    Árboles de Expresión:
+
+	    	Utilizados en análisis sintáctico de expresiones matemáticas.
+
+	    Estructuras de Archivos: 
+
+	    	Los sistemas de archivos utilizan árboles binarios para organizar y buscar archivos de manera eficiente.
+
+	    Compresión de Datos: 
+
+	    	Los árboles de Huffman se utilizan en algoritmos de compresión de datos.
+
+
 
 || Árbol AVL
+
+	Es un tipo de árbol binario de búsqueda (BST) que se autobalancea para asegurar que las operaciones de búsqueda, inserción y eliminación sean eficientes. 
+
+	Fue el primer árbol binario de búsqueda autobalanceado, introducido por los matemáticos Adelson-Velsky y Landis en 1962.
+
+
+	Balanceado por Altura:
+
+	    Para cualquier nodo en un árbol AVL, la diferencia en la altura de los subárboles izquierdo y derecho (también conocida como el factor de equilibrio o balance factor) es como máximo 1.
+
+	    Factor de equilibrio = Altura del subárbol izquierdo - Altura del subárbol derecho.
+
+
+	Operaciones en Tiempo Logarítmico:
+
+	    Las operaciones de búsqueda, inserción y eliminación tienen una complejidad temporal de O(log⁡n), donde n es el número de nodos en el árbol, debido a la propiedad de balanceo.
+
+
+	Rotaciones en un Árbol AVL:
+
+		Para mantener el árbol balanceado, se utilizan rotaciones cuando se inserta o elimina un nodo que provoca un desbalance. 
+
+		Hay cuatro tipos de rotaciones:
+
+		    1. Rotación Simple a la Derecha (Right Rotation):
+
+		        Se usa cuando se inserta un nodo en el subárbol izquierdo del hijo izquierdo.
+
+		        También conocida como rotación LL.
+
+		    2. Rotación Simple a la Izquierda (Left Rotation):
+
+		        Se usa cuando se inserta un nodo en el subárbol derecho del hijo derecho.
+
+		        También conocida como rotación RR.
+
+		    3. Rotación Doble a la Derecha (Left-Right Rotation):
+
+		        Se usa cuando se inserta un nodo en el subárbol derecho del hijo izquierdo.
+
+		        También conocida como rotación LR.
+
+		    4. Rotación Doble a la Izquierda (Right-Left Rotation):
+
+		        Se usa cuando se inserta un nodo en el subárbol izquierdo del hijo derecho.
+
+		        También conocida como rotación RL.
+
+
+	Implementación:
+
+		```python
+
+		class TreeNode:
+		    def __init__(self, key):
+		        self.key = key
+		        self.left = None
+		        self.right = None
+		        self.height = 1
+
+		class AVLTree:
+		    def insert(self, root, key):
+		        if not root:
+		            return TreeNode(key)
+		        elif key < root.key:
+		            root.left = self.insert(root.left, key)
+		        else:
+		            root.right = self.insert(root.right, key)
+
+		        root.height = 1 + max(self.get_height(root.left), self.get_height(root.right))
+		        balance = self.get_balance(root)
+
+		        # Rotación LL
+		        if balance > 1 and key < root.left.key:
+		            return self.right_rotate(root)
+		        # Rotación RR
+		        if balance < -1 and key > root.right.key:
+		            return self.left_rotate(root)
+		        # Rotación LR
+		        if balance > 1 and key > root.left.key:
+		            root.left = self.left_rotate(root.left)
+		            return self.right_rotate(root)
+		        # Rotación RL
+		        if balance < -1 and key < root.right.key:
+		            root.right = self.right_rotate(root.right)
+		            return self.left_rotate(root)
+
+		        return root
+
+		    def left_rotate(self, z):
+		        y = z.right
+		        T2 = y.left
+		        y.left = z
+		        z.right = T2
+		        z.height = 1 + max(self.get_height(z.left), self.get_height(z.right))
+		        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+		        return y
+
+		    def right_rotate(self, z):
+		        y = z.left
+		        T3 = y.right
+		        y.right = z
+		        z.left = T3
+		        z.height = 1 + max(self.get_height(z.left), self.get_height(z.right))
+		        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+		        return y
+
+		    def get_height(self, root):
+		        if not root:
+		            return 0
+		        return root.height
+
+		    def get_balance(self, root):
+		        if not root:
+		            return 0
+		        return self.get_height(root.left) - self.get_height(root.right)
+
+		    def inorder(self, root):
+		        if root:
+		            self.inorder(root.left)
+		            print(root.key, end=' ')
+		            self.inorder(root.right)
+
+		# Ejemplo de uso
+		tree = AVLTree()
+		root = None
+		keys = [10, 20, 30, 40, 50, 25]
+
+		for key in keys:
+		    root = tree.insert(root, key)
+
+		print("Recorrido Inorden del árbol AVL:")
+		tree.inorder(root)
+
+		```
+
+
+	Ventajas de los Árboles AVL:
+
+		Eficiencia:
+
+		    Mantienen la altura del árbol como O(log⁡n), asegurando búsquedas, inserciones y eliminaciones eficientes.
+
+		Balanceo Automático:
+
+		    El árbol se autobalancea después de cada inserción y eliminación, lo que minimiza la necesidad de intervención manual para mantener el balance.
+
+
+	Aplicaciones:
+
+		Bases de Datos:
+
+		    Utilizados en la implementación de índices para asegurar búsquedas rápidas.
+
+		Sistemas de Archivos:
+
+		    Utilizados en la gestión de estructuras de directorios y archivos.
+
+		Aplicaciones en Tiempo Real:
+
+		    Beneficiosos en sistemas donde las operaciones rápidas y predecibles son críticas.	
+
 
 
 || Heap
 
+	Estructura de datos basada en un árbol que cumple con la propiedad del heap, que puede ser un Heap Máximo (Max-Heap) o un Heap Mínimo (Min-Heap). 
+
+	Los heaps se utilizan principalmente para implementar colas de prioridad y para algoritmos de ordenación como el Heapsort.
+
+
+	Propiedad del Heap:
+
+	    Heap Máximo (Max-Heap): 
+
+	    	En un Max-Heap, para cualquier nodo i que no sea la raíz, el valor de i es menor o igual que el valor de su padre.
+
+	    	Esto significa que el valor máximo está en la raíz.
+
+	    Heap Mínimo (Min-Heap): 
+
+	    	En un Min-Heap, para cualquier nodo i que no sea la raíz, el valor de i es mayor o igual que el valor de su padre.
+
+	    	Esto significa que el valor mínimo está en la raíz.
+
+
+	Estructura Completa del Árbol:
+
+	    Un heap es un árbol binario completo, lo que significa que todos los niveles del árbol están completamente llenos, excepto posiblemente el último nivel, que está lleno de izquierda a derecha.
+
+
+	Representación:
+
+		Un heap se puede representar de manera eficiente utilizando un array. 
+
+		Para un nodo en la posición i del array:
+
+			El hijo izquierdo está en la posición 2i+1.
+
+			El hijo derecho está en la posición 2i+2. 
+
+			El padre está en la posición [i-1/2].
+
+
+	Operaciones: 	
+
+		Inserción:
+
+		    Agregar un nuevo elemento al final del array (último nivel del árbol) y restaurar la propiedad del heap haciendo un proceso de subida (heapify-up).
+
+		Eliminación del Elemento Máximo o Mínimo:
+
+		    Eliminar la raíz (el máximo en un Max-Heap o el mínimo en un Min-Heap), reemplazarla con el último elemento del array, y restaurar la propiedad del heap haciendo un proceso de bajada (heapify-down).
+
+		Heapify:
+
+		    Proceso para restaurar la propiedad del heap.
+
+		    Puede ser hacia arriba (heapify-up) después de la inserción o hacia abajo (heapify-down) después de la eliminación.
+
+
+	Implementación:
+
+		```python
+
+		class MaxHeap:
+		    def __init__(self):
+		        self.heap = []
+
+		    def insert(self, element):
+		        self.heap.append(element)
+		        self.heapify_up(len(self.heap) - 1)
+
+		    def delete_max(self):
+		        if len(self.heap) > 1:
+		            self.swap(0, len(self.heap) - 1)
+		            max_value = self.heap.pop()
+		            self.heapify_down(0)
+		        elif self.heap:
+		            max_value = self.heap.pop()
+		        else:
+		            max_value = None
+		        return max_value
+
+		    def heapify_up(self, index):
+		        parent_index = (index - 1) // 2
+		        if index > 0 and self.heap[index] > self.heap[parent_index]:
+		            self.swap(index, parent_index)
+		            self.heapify_up(parent_index)
+
+		    def heapify_down(self, index):
+		        largest = index
+		        left_child_index = 2 * index + 1
+		        right_child_index = 2 * index + 2
+
+		        if left_child_index < len(self.heap) and self.heap[left_child_index] > self.heap[largest]:
+		            largest = left_child_index
+
+		        if right_child_index < len(self.heap) and self.heap[right_child_index] > self.heap[largest]:
+		            largest = right_child_index
+
+		        if largest != index:
+		            self.swap(index, largest)
+		            self.heapify_down(largest)
+
+		    def swap(self, i, j):
+		        self.heap[i], self.heap[j] = self.heap[j], self.heap[i]
+
+		    def get_max(self):
+		        if self.heap:
+		            return self.heap[0]
+		        return None
+
+		# Ejemplo de uso
+		heap = MaxHeap()
+		elements = [3, 1, 6, 5, 2, 4]
+		for element in elements:
+		    heap.insert(element)
+
+		print("Heap:", heap.heap)
+		print("Max element:", heap.get_max())
+		print("Deleted max element:", heap.delete_max())
+		print("Heap after deletion:", heap.heap)
+
+		```
+
+
+	Aplicaciones:
+
+		Colas de Prioridad:
+
+		    Los heaps se utilizan para implementar colas de prioridad donde el elemento con la prioridad más alta (máxima o mínima) siempre está disponible.
+
+		Heapsort:
+
+		    Un algoritmo de ordenación basado en la creación de un heap y la eliminación repetida del elemento máximo o mínimo.
+
+		Algoritmos de Grafos:
+
+		    Utilizados en algoritmos como el de Dijkstra para encontrar el camino más corto y en el algoritmo de Prim para encontrar el árbol de expansión mínimo.
+
+
 
 || Grafo
 
+	Estructura de datos fundamental en informática y matemáticas que se utiliza para representar relaciones y conexiones entre un conjunto de elementos. 
+
+	Los grafos son extremadamente versátiles y se utilizan en una amplia variedad de aplicaciones, desde redes de computadoras hasta la representación de relaciones entre personas en redes sociales.
+
+
+	Componentes:
+
+		Vértices (Nodos):
+
+    		Representan los objetos o entidades en un grafo.
+
+    		Se denotan comúnmente como V o N.
+
+		Aristas (Enlaces):
+
+		    Representan las conexiones o relaciones entre los vértices.
+
+		    Se denotan comúnmente como E.
+
+
+	Representación:
+
+		Lista de Adyacencia:
+
+		    Utiliza un array o una lista donde cada posición contiene una lista de los vértices adyacentes a un vértice específico.
+
+		    Es eficiente en términos de espacio para grafos dispersos (sparse graphs).
+
+		Matriz de Adyacencia:
+
+		    Utiliza una matriz n×n, donde n es el número de vértices, y el valor en la posición (i,j) indica si existe una arista entre los vértices i y j.
+
+		    Es eficiente para grafos densos (dense graphs), pero puede consumir mucho espacio para grafos dispersos.
+
+
+	Implementación:
+
+		```python
+
+		class Grafo:
+		    def __init__(self):
+		        self.grafo = {}
+
+		    def agregar_vertice(self, vertice):
+		        if vertice not in self.grafo:
+		            self.grafo[vertice] = []
+
+		    def agregar_arista(self, vertice1, vertice2):
+		        if vertice1 in self.grafo and vertice2 in self.grafo:
+		            self.grafo[vertice1].append(vertice2)
+		            self.grafo[vertice2].append(vertice1)  # Para un grafo no dirigido
+
+		    def mostrar_grafo(self):
+		        for vertice in self.grafo:
+		            print(f"{vertice}: {self.grafo[vertice]}")
+
+		# Ejemplo de uso
+		g = Grafo()
+		g.agregar_vertice('A')
+		g.agregar_vertice('B')
+		g.agregar_vertice('C')
+		g.agregar_arista('A', 'B')
+		g.agregar_arista('A', 'C')
+		g.agregar_arista('B', 'C')
+
+		g.mostrar_grafo()
+
+		```
+
+
+	Aplicaciones: 
+
+		Redes de Computadoras:
+
+		    Modelan la conectividad y las rutas en redes de computadoras.
+
+		Redes Sociales:
+
+		    Representan relaciones y conexiones entre personas.
+
+		Sistemas de Recomendación:
+
+		    Utilizan grafos para modelar y analizar las relaciones entre usuarios y productos.
+
+		Rutas y Navegación:
+
+		    Utilizan grafos para encontrar rutas óptimas en sistemas de transporte y navegación.
+
+		Análisis de Grafos:
+
+		    Utilizados en biología para modelar redes de interacción genética y en química para modelar estructuras moleculares.
 
 
 
@@ -3483,10 +4807,353 @@
         Problemas clásicos (Fibonacci, Knapsack, Longest Common Subsequence).
 
 
+	Algoritmos de Optimización:    
+
+		Son métodos utilizados para encontrar la mejor solución posible (óptima) de un problema bajo un conjunto dado de restricciones. 
+
+		Estos algoritmos tienen aplicaciones en diversas áreas, incluyendo ingeniería, economía, logística, inteligencia artificial, y ciencias de la computación. 
+
+		Los problemas de optimización se pueden clasificar en función de varios criterios, como el 'tipo de función objetivo', la 'naturaleza de las variables' y las 'restricciones'.
+
+
+		Clasificación de los Problemas de Optimización:
+
+			1. Optimización Lineal:
+
+			    La función objetivo y las restricciones son lineales.
+
+			    Ejemplo: Maximizar c^Tx sujeto a Ax≤b.
+
+			2. Optimización No Lineal:
+
+			    La función objetivo o las restricciones son no lineales.
+
+			    Ejemplo: Minimizar f(x) sujeto a g_i(x)≤0.
+
+			3. Optimización Discreta:
+
+			    Las variables de decisión son discretas (por ejemplo, enteros).
+
+			    Ejemplo: Problemas de programación entera.
+
+			4. Optimización Continua:
+
+			    Las variables de decisión pueden tomar cualquier valor dentro de un rango continuo.
+
+			    Ejemplo: Problemas de optimización sin restricciones.
+
+			5. Optimización Combinatoria:
+
+			    Se buscan soluciones óptimas en un espacio discreto y finito.
+
+			    Ejemplo: Problema del Viajante (TSP).
+
+
+		Algoritmos Clásicos de Optimización:
+
+			1. Algoritmo Simplex:
+
+    			Utilizado para problemas de optimización lineal.
+    			
+    			Itera sobre los vértices del conjunto factible para encontrar la solución óptima.
+
+
+			2. Método de Newton:
+
+			    Utilizado para optimización no lineal.
+
+			    Usa derivadas de primer y segundo orden para encontrar el mínimo de una función.
+
+
+			3. Descenso del Gradiente:
+
+			    Aproximación iterativa para encontrar mínimos locales de funciones continuas y diferenciables.
+
+			    Actualiza las variables en la dirección opuesta al gradiente de la función objetivo
+
+
+			4. Programación Dinámica:
+
+			    Descompone un problema en subproblemas más pequeños y resuelve cada uno de ellos para construir la solución óptima global.
+
+			    Ejemplo: Problema de la mochila, Fibonacci
+
+
+			5. Algoritmos Genéticos:
+
+			    Técnicas de búsqueda heurísticas inspiradas en la evolución biológica.
+
+			    Utilizan operadores como selección, cruce y mutación para encontrar soluciones óptimas.
+
+			6.Algoritmo de Recocido Simulado (Simulated Annealing):
+
+    			Inspirado en el proceso de recocido en metalurgia.
+
+    			Permite explorar soluciones subóptimas en busca de un óptimo global.
+
+
+    	Ejemplos: 
+
+    		1. Algoritmo Simplex para Optimización Lineal:
+
+    		```python
+
+    		from scipy.optimize import linprog
+
+			# Definir la función objetivo: maximizar c^T x
+			c = [-1, -2]  # Coeficientes de la función objetivo
+
+			# Definir las restricciones: Ax <= b
+			A = [[2, 1], [1, 1], [1, 3]]
+			b = [20, 16, 36]
+
+			# Resolver el problema de optimización lineal
+			resultado = linprog(c, A_ub=A, b_ub=b, method='simplex')
+
+			print('Valor óptimo:', resultado.fun)
+			print('Variables de decisión:', resultado.x)
+
+    		```
+
+
+    		2. Descenso del Gradiente para Optimización No Lineal:
+
+    		```python
+
+    		import numpy as np
+
+			# Definir la función objetivo
+			def f(x):
+			    return x**2 + 4*np.sin(5*x)
+
+			# Definir su derivada
+			def df(x):
+			    return 2*x + 20*np.cos(5*x)
+
+			# Parámetros del algoritmo
+			x = 2  # Valor inicial
+			learning_rate = 0.01
+			num_iterations = 100
+
+			# Aplicar el algoritmo de descenso del gradiente
+			for _ in range(num_iterations):
+			    x -= learning_rate * df(x)
+
+			print('Valor óptimo:', f(x))
+			print('Variable de decisión:', x)
+
+    		```
+
+
+    	Aplicaciones: 
+
+			Logística y Transporte:
+
+			    Optimización de rutas de transporte, distribución de productos, y gestión de inventarios.
+
+			    Ejemplo: Problema del Viajante (TSP), Problema de la mochila.
+
+			Finanzas y Economía:
+
+			    Optimización de carteras de inversión, análisis de riesgos, y asignación de recursos.
+
+			    Ejemplo: Modelo de Markowitz para la optimización de carteras.
+
+			Ingeniería y Manufactura:
+
+			    Diseño óptimo de estructuras, optimización de procesos de fabricación, y gestión de la producción.
+
+			    Ejemplo: Minimización de costos de producción, maximización de eficiencia.
+
+			Inteligencia Artificial y Aprendizaje Automático:
+
+			    Entrenamiento de modelos, ajuste de hiperparámetros, y optimización de funciones de pérdida.
+
+			    Ejemplo: Entrenamiento de redes neuronales, métodos de ensamble.
+
+			Ciencias de la Computación:
+
+			    Optimización de algoritmos, asignación de tareas en sistemas distribuidos, y diseño de sistemas eficientes.
+
+			    Ejemplo: Algoritmos de planificación, optimización de consultas en bases de datos.    		
+
+
+	Programación Dinámica:
+
+		Es una técnica de diseño de algoritmos que se utiliza para resolver problemas complejos dividiéndolos en subproblemas más simples y resolviendo cada subproblema solo una vez, almacenando sus soluciones para evitar cálculos redundantes. 
+
+		Esta técnica es especialmente útil para problemas de optimización donde se requiere encontrar una solución óptima bajo ciertas restricciones.
+
+
+		Conceptos:	
+
+			1. Subproblemas Superpuestos:
+
+			    La característica clave de los problemas que se pueden resolver mediante programación dinámica es que los mismos subproblemas se resuelven repetidamente. 
+
+			    En lugar de resolverlos de nuevo cada vez que se presentan, la programación dinámica almacena sus soluciones en una tabla (a menudo llamada 'memoización').
+
+			2. Estructura Recursiva:
+
+			    Un problema tiene estructura recursiva si su solución óptima se puede construir eficientemente a partir de soluciones óptimas de sus subproblemas. 
+
+			    Es decir, se puede dividir el problema original en subproblemas más pequeños de forma recursiva.
+
+			Tabla de Memoria (Memoización):
+
+			    Es una técnica para almacenar los resultados de los subproblemas para reutilizarlos más tarde. 
+
+			    Esto puede implementarse utilizando matrices, diccionarios u otras estructuras de datos adecuadas.
+
+
+		Estrategias de Programación Dinámica:
+
+			Top-Down (Memoización):
+
+			    Enfoque recursivo donde los resultados de los subproblemas se almacenan a medida que se calculan. 
+
+			    Si un subproblema ya ha sido resuelto, su resultado se recupera de la memoria en lugar de ser recalculado.
+
+			Bottom-Up (Tabulación):
+
+			    Enfoque iterativo donde los subproblemas se resuelven primero y se combinan para resolver problemas más grandes. 
+
+			    Esto generalmente implica construir una tabla de soluciones desde los subproblemas más pequeños hasta el problema original.
+
+
+		Ejemplo: 
+
+			1. Fibonacci:
+
+    			El problema clásico de calcular el n-ésimo número de Fibonacci puede resolverse eficientemente con programación dinámica.
+
+			```python
+
+			def fibonacci(n):
+			    # Crear una tabla para almacenar resultados de subproblemas
+			    fib = [0] * (n+1)
+			    # Casos base
+			    fib[0] = 0
+			    fib[1] = 1
+			    # Llenar la tabla de manera bottom-up
+			    for i in range(2, n+1):
+			        fib[i] = fib[i-1] + fib[i-2]
+			    return fib[n]
+
+			print(fibonacci(10))  # Salida: 55
+
+    		```
+
+
+    		2. Problema de la Mochila (0/1 Knapsack):
+
+    			Dado un conjunto de elementos, cada uno con un peso y un valor, determinar la combinación de elementos que maximiza el valor total sin exceder un peso máximo.
+
+    		```python
+
+    		def knapsack(W, weights, values, n):
+			    # Crear una tabla para almacenar resultados de subproblemas
+			    K = [[0 for x in range(W + 1)] for x in range(n + 1)]
+
+			    # Llenar la tabla de manera bottom-up
+			    for i in range(n + 1):
+			        for w in range(W + 1):
+			            if i == 0 or w == 0:
+			                K[i][w] = 0
+			            elif weights[i - 1] <= w:
+			                K[i][w] = max(values[i - 1] + K[i - 1][w - weights[i - 1]], K[i - 1][w])
+			            else:
+			                K[i][w] = K[i - 1][w]
+			    return K[n][W]
+
+			values = [60, 100, 120]
+			weights = [10, 20, 30]
+			W = 50
+			n = len(values)
+			print(knapsack(W, weights, values, n))  # Salida: 220
+
+    		```
+
+
+    		3. Problema de la Secuencia Común Más Larga (Longest Common Subsequence, LCS):
+
+    			Encontrar la longitud de la subsecuencia común más larga entre dos cadenas de caracteres.
+
+    		```python
+
+    		def lcs(X, Y):
+			    m = len(X)
+			    n = len(Y)
+			    # Crear una tabla para almacenar resultados de subproblemas
+			    L = [[0 for x in range(n + 1)] for x in range(m + 1)]
+
+			    # Llenar la tabla de manera bottom-up
+			    for i in range(m + 1):
+			        for j in range(n + 1):
+			            if i == 0 or j == 0:
+			                L[i][j] = 0
+			            elif X[i - 1] == Y[j - 1]:
+			                L[i][j] = L[i - 1][j - 1] + 1
+			            else:
+			                L[i][j] = max(L[i - 1][j], L[i][j - 1])
+			    return L[m][n]
+
+			X = "AGGTAB"
+			Y = "GXTXAYB"
+			print(lcs(X, Y))  # Salida: 4 (GTAB)
+
+    		```
+
+
+    	Aplicaciones:
+
+    		Optimización de Rutas:
+
+			    Encontrar las rutas más cortas o los costos mínimos en redes, como en el algoritmo de Floyd-Warshall para rutas más cortas.
+
+			Secuenciación de ADN:
+
+			    Problemas de alineación de secuencias y predicción de estructuras secundarias.
+
+			Análisis Financiero:
+
+			    Optimización de inversiones y gestión de carteras.
+
+			Reconocimiento de Patrones:
+
+			    Problemas de reconocimiento de caracteres y procesamiento de imágenes.
+
+			Planificación y Toma de Decisiones:
+
+			    Modelos de decisión en inteligencia artificial y robótica.
+
+
+		Ventajas:
+
+    		Eficiencia: 
+
+    			Reduce la complejidad temporal al evitar cálculos redundantes.
+
+    		Generalidad: 
+
+    			Puede aplicarse a una amplia variedad de problemas.
+
+
+    	Desventajas: 
+
+		    Memoria: 
+
+		    	Puede requerir una cantidad significativa de memoria para almacenar soluciones de subproblemas.
+
+		    Complejidad: 
+
+		    	A veces puede ser difícil identificar la estructura recursiva y diseñar la tabla de memoización adecuada
+
+
 
 || Algoritmos Avanzados
 
-	1. Algoritmos de Dividir y Vencerás y Greedy:
+	Algoritmos de Dividir y Vencerás y Greedy:
 
     	Dividir y Vencerás:
         	
@@ -3498,3 +5165,385 @@
         	Principios de algoritmos voraces.
         	
         	Problemas clásicos (Huffman Coding, Activity Selection).
+
+
+    Algoritmos de Dividir y Vencerás:
+
+    	Técnica fundamental en el diseño de algoritmos que se basa en la descomposición de un problema en subproblemas más pequeños, resolviendo cada subproblema de manera recursiva y combinando sus soluciones para obtener la solución del problema original. 
+
+    	Esta técnica es eficaz para una amplia variedad de problemas en informática y matemáticas.
+
+
+    	Conceptos: 
+
+    		Dividir (Divide):
+
+			    El problema se divide en varios subproblemas más pequeños que son instancias más simples del mismo problema.
+
+			Vencer (Conquer):
+
+			    Cada subproblema se resuelve recursivamente. 
+
+			    Si los subproblemas son suficientemente pequeños, se resuelven directamente.
+
+			Combinar (Combine):
+
+			    Las soluciones de los subproblemas se combinan para formar la solución del problema original.
+
+		
+		Beneficios: 
+
+			Eficiencia:
+
+			    Puede reducir significativamente el tiempo de ejecución en comparación con métodos iterativos simples.
+
+			Paralelización:
+
+			    Los subproblemas pueden ser resueltos en paralelo, aprovechando arquitecturas de computación concurrente y distribuida.
+
+			Claridad:
+
+			    Facilita el diseño y la comprensión de algoritmos complejos al dividir el problema en partes manejables.
+
+
+		Ejemplo: 
+
+			1. Merge Sort:
+
+				Un algoritmo de ordenación que divide repetidamente una lista en mitades hasta que cada sublista contiene un solo elemento, y luego combina las sublistas en una lista ordenada
+
+			```python
+
+			def merge_sort(arr):
+			    if len(arr) > 1:
+			        mid = len(arr) // 2
+			        L = arr[:mid]
+			        R = arr[mid:]
+
+			        merge_sort(L)
+			        merge_sort(R)
+
+			        i = j = k = 0
+
+			        while i < len(L) and j < len(R):
+			            if L[i] < R[j]:
+			                arr[k] = L[i]
+			                i += 1
+			            else:
+			                arr[k] = R[j]
+			                j += 1
+			            k += 1
+
+			        while i < len(L):
+			            arr[k] = L[i]
+			            i += 1
+			            k += 1
+
+			        while j < len(R):
+			            arr[k] = R[j]
+			            j += 1
+			            k += 1
+
+			arr = [12, 11, 13, 5, 6, 7]
+			merge_sort(arr)
+			print("Sorted array is:", arr)
+
+			```
+
+
+			2. Quick Sort:
+
+    			Un algoritmo de ordenación que selecciona un 'pivote' y reordena los elementos de modo que todos los elementos menores que el pivote queden a su izquierda y los mayores a su derecha. 
+
+    			Luego, se aplica recursivamente la misma operación a las sublistas de elementos menores y mayores.
+
+    		```python
+
+    		def quick_sort(arr):
+			    if len(arr) <= 1:
+			        return arr
+			    else:
+			        pivot = arr[len(arr) // 2]
+			        left = [x for x in arr if x < pivot]
+			        middle = [x for x in arr if x == pivot]
+			        right = [x for x in arr if x > pivot]
+			        return quick_sort(left) + middle + quick_sort(right)
+
+			arr = [3, 6, 8, 10, 1, 2, 1]
+			print("Sorted array is:", quick_sort(arr))
+
+    		```
+
+
+    		3. Búsqueda Binaria:
+
+    			Un algoritmo de búsqueda eficiente en listas ordenadas que divide repetidamente el rango de búsqueda a la mitad hasta encontrar el elemento deseado o determinar que no está presente.
+
+    		```python
+
+    		Búsqueda Binaria:
+
+    			Un algoritmo de búsqueda eficiente en listas ordenadas que divide repetidamente el rango de búsqueda a la mitad hasta encontrar el elemento deseado o determinar que no está presente.
+
+    		```
+
+
+    		4. Algoritmo de Strassen para la Multiplicación de Matrices:
+
+    			Un método más rápido que el algoritmo tradicional para multiplicar matrices grandes dividiendo las matrices en submatrices más pequeñas.
+
+    		```python
+
+    		import numpy as np
+
+			def strassen(A, B):
+			    if A.shape[0] == 1:
+			        return A * B
+			    else:
+			        mid = A.shape[0] // 2
+			        A11 = A[:mid, :mid]
+			        A12 = A[:mid, mid:]
+			        A21 = A[mid:, :mid]
+			        A22 = A[mid:, mid:]
+			        B11 = B[:mid, :mid]
+			        B12 = B[:mid, mid:]
+			        B21 = B[mid:, :mid]
+			        B22 = B[mid:, mid:]
+
+			        M1 = strassen(A11 + A22, B11 + B22)
+			        M2 = strassen(A21 + A22, B11)
+			        M3 = strassen(A11, B12 - B22)
+			        M4 = strassen(A22, B21 - B11)
+			        M5 = strassen(A11 + A12, B22)
+			        M6 = strassen(A21 - A11, B11 + B12)
+			        M7 = strassen(A12 - A22, B21 + B22)
+
+			        C11 = M1 + M4 - M5 + M7
+			        C12 = M3 + M5
+			        C21 = M2 + M4
+			        C22 = M1 - M2 + M3 + M6
+
+			        C = np.vstack((np.hstack((C11, C12)), np.hstack((C21, C22))))
+			        return C
+
+			A = np.array([[1, 2], [3, 4]])
+			B = np.array([[5, 6], [7, 8]])
+			print("Product of matrices:\n", strassen(A, B))
+
+    		```
+
+
+    	Ventajas: 
+
+    	    Eficiencia: 
+
+    	    	Puede ser más rápido que los métodos iterativos simples debido a la reducción del tamaño del problema.
+		    
+		    Paralelización:
+
+		    	Subproblemas independientes pueden ser resueltos en paralelo.
+
+		    Modularidad: 
+
+		    	Facilita la implementación y el análisis de algoritmos complejos.
+
+
+		Desventajas:
+
+		    Sobrecarga de Recursión:
+
+		    	El uso intensivo de recursión puede llevar a un mayor uso de la pila de llamadas, lo que puede ser ineficiente en términos de memoria.
+		    
+		    Complejidad de Combinación: 
+
+		    	En algunos problemas, la etapa de combinación puede ser compleja y costosa en términos de tiempo.
+
+
+    Algoritmos Greedy:
+
+    	Técnica de diseño de algoritmos que resuelven problemas de optimización mediante la construcción de una solución paso a paso, seleccionando en cada paso la opción que parece ser la mejor en ese momento. 
+
+    	La idea principal es tomar decisiones locales óptimas con la esperanza de encontrar una solución global óptima.
+
+
+    	Características:
+
+    		Selección de la Mejor Opción Local:
+
+			    En cada paso, se elige la opción que parece ser la mejor en ese momento, sin considerar decisiones futuras.
+
+			Irrevocabilidad:
+
+			    Una vez que se toma una decisión, no se reconsidera. 
+
+			    Las decisiones son finales y no pueden ser deshechas.
+
+			Soluciones Constructivas:
+
+			    La solución se construye de manera incremental, añadiendo un elemento a la vez hasta completar la solución.
+
+
+		Propiedades:
+
+			Para que un algoritmo greedy produzca una solución óptima, el problema debe cumplir con ciertas propiedades.
+
+			Propiedad Greedy:
+
+			    Siempre es posible tomar una decisión óptima localmente que lleva a una solución global óptima.
+
+			Propiedad de Subestructura Óptima:
+
+			    Una solución óptima del problema contiene soluciones óptimas de sus subproblemas.
+
+
+		Ejemplos:
+
+			1. Cambio de Monedas:
+
+				Se da un conjunto de denominaciones de monedas y una cantidad de dinero.
+
+				El objetivo es devolver el cambio utilizando el menor número de monedas posible.
+
+			```python
+
+			def cambio_monedas(monedas, cantidad):
+			    resultado = []
+			    for moneda in sorted(monedas, reverse=True):
+			        while cantidad >= moneda:
+			            cantidad -= moneda
+			            resultado.append(moneda)
+			    return resultado
+
+			monedas = [1, 5, 10, 25]
+			cantidad = 63
+			print("Monedas usadas:", cambio_monedas(monedas, cantidad))
+
+			```
+
+
+			2. Mochila Fraccionaria:
+
+				Se da un conjunto de objetos, cada uno con un peso y un valor. 
+
+				El objetivo es maximizar el valor total en una mochila con capacidad limitada, permitiendo fracciones de objetos.
+
+			```python
+
+			class Objeto:
+			    def __init__(self, peso, valor):
+			        self.peso = peso
+			        self.valor = valor
+			        self.valor_por_peso = valor / peso
+
+			def mochila_fraccionaria(capacidad, objetos):
+			    objetos.sort(key=lambda x: x.valor_por_peso, reverse=True)
+			    valor_total = 0.0
+			    for objeto in objetos:
+			        if capacidad > 0 and objeto.peso <= capacidad:
+			            capacidad -= objeto.peso
+			            valor_total += objeto.valor
+			        else:
+			            fraccion = capacidad / objeto.peso
+			            valor_total += objeto.valor * fraccion
+			            capacidad = 0
+			            break
+			    return valor_total
+
+			objetos = [Objeto(10, 60), Objeto(20, 100), Objeto(30, 120)]
+			capacidad = 50
+			print("Valor total en la mochila:", mochila_fraccionaria(capacidad, objetos))
+
+			```
+
+
+			3. Problema del Árbol de Expansión Mínima (Algoritmo de Prim):
+
+				Encontrar el árbol de expansión mínima en un grafo no dirigido y ponderado, conectando todos los vértices con el costo total mínimo.
+
+			```python
+
+			import heapq
+
+			def prim(grafo, inicio):
+			    mst = []
+			    visitados = set()
+			    min_heap = [(0, inicio)]
+			    while min_heap:
+			        costo, u = heapq.heappop(min_heap)
+			        if u not in visitados:
+			            visitados.add(u)
+			            mst.append((costo, u))
+			            for vecino, peso in grafo[u]:
+			                if vecino not in visitados:
+			                    heapq.heappush(min_heap, (peso, vecino))
+			    return mst
+
+			grafo = {
+			    'A': [('B', 1), ('C', 4)],
+			    'B': [('A', 1), ('C', 2), ('D', 5)],
+			    'C': [('A', 4), ('B', 2), ('D', 1)],
+			    'D': [('B', 5), ('C', 1)]
+			}
+			print("Árbol de expansión mínima:", prim(grafo, 'A'))
+
+			```
+
+
+		4. Problema de Huffman (Codificación de Huffman):
+
+			Algoritmo utilizado para la compresión de datos sin pérdida que asigna códigos más cortos a los caracteres más frecuentes.
+
+			```python
+
+			import heapq
+			from collections import defaultdict
+
+			class Nodo:
+			    def __init__(self, frecuencia, caracter=None, izquierdo=None, derecho=None):
+			        self.frecuencia = frecuencia
+			        self.caracter = caracter
+			        self.izquierdo = izquierdo
+			        self.derecho = derecho
+
+			    def __lt__(self, otro):
+			        return self.frecuencia < otro.frecuencia
+
+			def codificacion_huffman(frecuencias):
+			    heap = [Nodo(freq, char) for char, freq in frecuencias.items()]
+			    heapq.heapify(heap)
+
+			    while len(heap) > 1:
+			        izquierdo = heapq.heappop(heap)
+			        derecho = heapq.heappop(heap)
+			        nuevo_nodo = Nodo(izquierdo.frecuencia + derecho.frecuencia, izquierdo=izquierdo, derecho=derecho)
+			        heapq.heappush(heap, nuevo_nodo)
+
+			    def construir_codigos(nodo, codigo="", codigos={}):
+			        if nodo.caracter is not None:
+			            codigos[nodo.caracter] = codigo
+			        else:
+			            construir_codigos(nodo.izquierdo, codigo + "0", codigos)
+			            construir_codigos(nodo.derecho, codigo + "1", codigos)
+			        return codigos
+
+			    raiz = heap[0]
+			    return construir_codigos(raiz)
+
+			frecuencias = defaultdict(int)
+			texto = "abracadabra"
+			for char in texto:
+			    frecuencias[char] += 1
+
+			codigos = codificacion_huffman(frecuencias)
+			print("Códigos de Huffman:", codigos)
+
+			```
+
+
+
+
+
+
+
+
+
